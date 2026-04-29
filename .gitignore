@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Lock files (keep package-lock.json for consistency)
+# Uncomment if you want to ignore lock files
+# package-lock.json
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Temporary files
+*.tmp
+.cache/

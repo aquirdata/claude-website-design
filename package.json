@@ -1,0 +1,23 @@
+{
+  "name": "aquirdata-claude-website-design",
+  "version": "1.0.0",
+  "description": "Aquire - AI-Driven Data Engineering website with Vercel Speed Insights",
+  "scripts": {
+    "dev": "python3 -m http.server 8000",
+    "test": "echo \"No tests specified\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquirdata/claude-website-design.git"
+  },
+  "keywords": ["vercel", "speed-insights", "performance"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aquirdata/claude-website-design/issues"
+  },
+  "homepage": "https://github.com/aquirdata/claude-website-design#readme",
+  "dependencies": {
+    "@vercel/speed-insights": "^2.0.0"
+  }
+}
