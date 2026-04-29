@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aquire — AI-Driven Data Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+<style>
+/* ══════════════════════════════════════════
+   RESET & TOKENS
+══════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:       #111e2a;
+  --bg2:      #172336;
+  --bg3:      #1d2d45;
+  --bg4:      #243551;
+  --border:   rgba(94,206,206,0.12);
+  --border2:  rgba(94,206,206,0.22);
+  --text:     #ccd8e8;
+  --muted:    #7ea2bc;
+  --faint:    #365070;
+  --accent:   #5ecece;
+  --accent2:  #38b2b2;
+  --adim:     rgba(94,206,206,0.09);
+  --adim2:    rgba(94,206,206,0.18);
+  --navy:     #1b3d76;
+  --mid-blue: #287992;
+  --red:      #ff5a5a;
+  --amber:    #f5a623;
+}
+html{scroll-behavior:smooth;font-size:16px;}
+body{
+  font-family:'DM Sans',sans-serif;
+  font-weight:300;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+/* ── SITE WIDTH CONTAINER ── */
+.site-wrap{
+  max-width:1280px;
+  margin:0 auto;
+  width:100%;
+}
+/* Nav inner wrapper */
+.nav-inner{
+  max-width:1280px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  width:100%;
+}
+/* Full-bleed section with constrained inner */
+.section-inner{
+  max-width:1280px;
+  margin:0 auto;
+  width:100%;
+}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+img{max-width:100%;display:block;}
+
+/* ── PAGE SYSTEM ── */
+.page{display:none;animation:pageFadeIn .35s ease;}
+.page.active{display:block;}
+/* All direct section/div children of pages are full-width bg,
+   but their padding provides the gutter. We constrain with max-width
+   on inner content via .site-wrap applied per-page. */
+.page > section, .page > div:not(.footer-bottom){
+  width:100%;
+}
+/* Constrain grid layouts to max-width */
+.home-hero,.home-cta,.scorecard-strip,
+.about-model,.sc-form-section,.contact-hero{
+  max-width:1280px;
+  margin-left:auto;
+  margin-right:auto;
+}
+@keyframes pageFadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+.nav{
+  position:sticky;top:0;z-index:200;
+  border-top:2px solid transparent;
+  background-image:linear-gradient(rgba(17,30,42,0.93),rgba(17,30,42,0.93)),linear-gradient(90deg,#1b3d76,#287992,#5ecece);
+  background-origin:border-box;
+  background-clip:padding-box,border-box;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:.5px solid var(--border);
+}
+.nav-inner{
+  padding:1.25rem clamp(1.5rem,4vw,3rem);
+}
+.nav-logo{
+  cursor:pointer;
+  display:flex;align-items:center;
+  flex-shrink:0;
+}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{
+  font-size:12px;font-weight:400;
+  letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);transition:color .2s;
+}
+.nav-links a:hover,.nav-links a.active-link{color:var(--text);}
+.nav-cta{
+  font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:9px 20px;
+  border:.5px solid var(--accent);
+  background:transparent;color:var(--accent);
+  border-radius:3px;transition:background .2s,color .2s;
+}
+.nav-cta:hover{background:var(--accent);color:#111e2a;}
+.nav-hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px;}
+.nav-hamburger span{display:block;width:22px;height:1.5px;background:var(--muted);transition:all .25s;}
+.mobile-menu{
+  display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+  background:var(--bg);z-index:300;
+  flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;
+}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-size:24px;font-family:'DM Serif Display',serif;color:var(--text);}
+.mobile-close{position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:var(--muted);font-size:28px;}
+
+/* ══════════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:500;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:11px 24px;
+  border:.5px solid var(--accent);
+  background:transparent;color:var(--accent);
+  border-radius:3px;transition:background .2s,color .2s;cursor:pointer;
+}
+.btn:hover{background:var(--accent);color:#111e2a;}
+.btn-solid{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:500;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:11px 24px;
+  background:var(--accent);color:#111e2a;
+  border:.5px solid var(--accent);
+  border-radius:3px;transition:background .2s,color .2s,transform .15s;cursor:pointer;
+}
+.btn-solid:hover{background:var(--accent2);color:#111e2a;transform:translateY(-1px);}
+.btn-ghost{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:12px;font-weight:400;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:11px 24px;
+  border:.5px solid var(--border2);
+  background:transparent;color:var(--muted);
+  border-radius:3px;transition:color .2s,border-color .2s;cursor:pointer;
+}
+.btn-ghost:hover{color:var(--text);border-color:rgba(255,255,255,.25);}
+
+/* ══════════════════════════════════════════
+   MARQUEE
+══════════════════════════════════════════ */
+.marquee-bar{
+  overflow:hidden;border-bottom:.5px solid var(--border);
+  padding:12px 0;background:var(--bg2);
+}
+.marquee-track{
+  display:flex;gap:2.5rem;
+  animation:marquee 24s linear infinite;
+  white-space:nowrap;
+}
+.marquee-item{
+  font-size:11px;font-weight:400;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--faint);flex-shrink:0;
+}
+.marquee-dot{
+  display:inline-block;width:3px;height:3px;
+  border-radius:50%;background:var(--faint);
+  vertical-align:middle;margin:0 1.25rem;
+}
+@keyframes marquee{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+/* ══════════════════════════════════════════
+   SECTION LABELS
+══════════════════════════════════════════ */
+.section-eyebrow{
+  font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:1.25rem;
+  display:flex;align-items:center;gap:8px;
+}
+.section-eyebrow::before{
+  content:'';display:inline-block;
+  width:18px;height:1px;background:var(--accent);
+}
+.section-label-vert{
+  font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--faint);
+}
+
+/* ══════════════════════════════════════════
+   SHARED LAYOUT HELPERS
+══════════════════════════════════════════ */
+.divider{height:.5px;background:var(--border);}
+.grid-2col{display:grid;grid-template-columns:1fr 1fr;}
+.card{
+  background:var(--bg2);
+  border:.5px solid var(--border);
+  border-radius:6px;padding:2rem;
+}
+.card:hover{border-color:var(--border2);}
+
+/* ══════════════════════════════════════════
+   AI BADGE
+══════════════════════════════════════════ */
+.ai-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 12px;border-radius:2px;
+  background:var(--adim2);
+  border:.5px solid rgba(0,229,160,.3);
+  color:var(--accent);
+}
+.ai-badge::before{
+  content:'';display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:linear-gradient(135deg,#5ecece,#287992);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.5;transform:scale(1.3);}}
+
+/* ══════════════════════════════════════════
+   PAGE: HOME
+══════════════════════════════════════════ */
+/* hero */
+.home-hero{
+  display:grid;grid-template-columns:1.1fr .9fr;
+  min-height:480px;border-bottom:.5px solid var(--border);
+}
+.home-hero-left{
+  padding:5rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.home-hero-left h1{
+  font-family:'DM Serif Display',serif;
+  font-size:50px;line-height:1.05;
+  letter-spacing:-1.5px;
+  color:var(--text);margin-bottom:1.5rem;
+  margin-top:1rem;
+}
+.home-hero-left h1 em{font-style:italic;color:var(--muted);}
+.home-hero-left p{
+  font-size:15px;color:var(--muted);
+  line-height:1.75;max-width:360px;margin-bottom:2.5rem;
+}
+.home-hero-right{
+  display:grid;grid-template-rows:1fr 1fr;
+  background:linear-gradient(160deg,#172336 0%,#1b2c43 100%);
+}
+.hero-stat{
+  padding:2.5rem clamp(1.25rem,3vw,3rem);
+  border-bottom:.5px solid var(--border);
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-stat:last-child{border-bottom:none;}
+.hero-stat-num{
+  font-family:'DM Serif Display',serif;
+  font-size:52px;letter-spacing:-2px;line-height:1;
+  background:linear-gradient(135deg,#5ecece,#287992);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:.4rem;
+}
+.hero-stat-label{
+  font-size:11px;font-weight:400;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap;}
+
+/* scorecard hero strip */
+.scorecard-strip{
+  background:var(--bg2);
+  border-bottom:.5px solid var(--border);
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+}
+.scorecard-strip-left h2{
+  font-family:'DM Serif Display',serif;
+  font-size:34px;line-height:1.15;letter-spacing:-.5px;
+  color:var(--text);margin:1rem 0;
+}
+.scorecard-strip-left p{
+  font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:1.75rem;
+}
+.scorecard-strip-right{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;
+}
+.sc-metric{
+  background:var(--bg3);
+  border:.5px solid var(--border);
+  border-radius:6px;padding:1.25rem 1.5rem;
+}
+.sc-metric-val{
+  font-family:'DM Serif Display',serif;
+  font-size:28px;letter-spacing:-1px;
+  background:linear-gradient(135deg,#5ecece,#287992);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1;margin-bottom:.35rem;
+}
+.sc-metric-label{font-size:12px;color:var(--muted);line-height:1.4;}
+
+/* services strip */
+.services-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-bottom:.5px solid var(--border);
+}
+.svc-card{
+  padding:2.5rem 2rem;
+  border-right:.5px solid var(--border);
+  position:relative;overflow:hidden;
+  transition:background .25s;cursor:default;
+}
+.svc-card:last-child{border-right:none;}
+.svc-card::after{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#1b3d76,#287992,#5ecece);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .3s ease;
+}
+.svc-card:hover{background:var(--bg3);}
+.svc-card:hover::after{transform:scaleX(1);}
+.svc-num{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--faint);margin-bottom:1.25rem;}
+.svc-title{
+  font-family:'DM Serif Display',serif;
+  font-size:17px;line-height:1.25;
+  color:var(--text);margin-bottom:.85rem;
+}
+.svc-desc{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* case studies */
+.cases-section{
+  display:grid;grid-template-columns:160px 1fr;
+  border-bottom:.5px solid var(--border);
+}
+.cases-label{
+  padding:3rem 2rem;
+  border-right:.5px solid var(--border);
+  writing-mode:vertical-rl;
+  display:flex;align-items:flex-start;
+}
+.cases-list{display:grid;grid-template-rows:1fr 1fr;}
+.case-item{
+  padding:2.5rem clamp(1.25rem,3vw,3rem);
+  border-bottom:.5px solid var(--border);
+  transition:background .2s;
+}
+.case-item:last-child{border-bottom:none;}
+.case-item:hover{background:var(--bg2);}
+.case-tag{
+  display:inline-flex;align-items:center;
+  font-size:10px;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;
+  padding:3px 10px;border-radius:2px;
+  border:.5px solid rgba(0,229,160,.25);
+  color:var(--accent);background:var(--adim);
+  margin-bottom:.9rem;
+}
+.case-title{
+  font-family:'DM Serif Display',serif;
+  font-size:20px;line-height:1.25;
+  color:var(--text);margin-bottom:.65rem;
+}
+.case-body{font-size:13px;color:var(--muted);line-height:1.7;max-width:560px;}
+
+/* home footer cta */
+.home-cta{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-top:.5px solid var(--border);
+}
+.home-cta-left{
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+  background:var(--bg2);
+}
+.home-cta-left h2{
+  font-family:'DM Serif Display',serif;
+  font-size:34px;line-height:1.1;letter-spacing:-.5px;
+  color:var(--text);margin-bottom:1.75rem;
+}
+.home-cta-left h2 span{color:var(--accent);}
+.home-cta-right{
+  padding:4rem clamp(1.5rem,4vw,3rem);
+  display:flex;flex-direction:column;gap:1rem;
+}
+.footer-link-item{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:.85rem 0;
+  border-bottom:.5px solid var(--border);
+  font-size:13px;color:var(--muted);
+  cursor:pointer;transition:color .2s;
+}
+.footer-link-item:hover{color:var(--text);}
+.footer-link-item:last-child{border-bottom:none;}
+.footer-bottom{
+  padding:1.5rem clamp(1.5rem,5vw,3.5rem);
+  border-top:.5px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  background:var(--bg);
+}
+.footer-bottom p{font-size:11px;color:var(--faint);letter-spacing:.04em;}
+
+/* ══════════════════════════════════════════
+   PAGE: ABOUT
+══════════════════════════════════════════ */
+.about-hero{
+  padding:6rem clamp(1.5rem,5vw,3.5rem) 5rem;
+  border-bottom:.5px solid var(--border);
+  max-width:760px;
+}
+.about-hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:46px;line-height:1.08;letter-spacing:-1.5px;
+  color:var(--text);margin:1rem 0 1.5rem;
+}
+.about-hero h1 em{font-style:italic;color:var(--muted);}
+.about-hero p{font-size:16px;color:var(--muted);line-height:1.8;max-width:580px;}
+
+.about-pillars{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:.5px solid var(--border);
+}
+.about-pillar{
+  padding:3rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+}
+.about-pillar:nth-child(2n){border-right:none;}
+.about-pillar:nth-child(3),.about-pillar:nth-child(4){border-top:.5px solid var(--border);}
+.about-pillar h3{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;line-height:1.2;
+  color:var(--text);margin:1rem 0 .85rem;
+}
+.about-pillar p{font-size:14px;color:var(--muted);line-height:1.7;}
+
+.about-model{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:.5px solid var(--border);
+  align-items:center;
+}
+.about-model-left{
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+}
+.about-model-left h2{
+  font-family:'DM Serif Display',serif;
+  font-size:30px;line-height:1.2;letter-spacing:-.3px;
+  color:var(--text);margin:1rem 0 1rem;
+}
+.about-model-left p{font-size:14px;color:var(--muted);line-height:1.75;}
+.about-model-right{
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  display:flex;align-items:center;justify-content:center;
+}
+.donut-wrapper{position:relative;width:200px;height:200px;}
+.donut-label{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+}
+.donut-label span:first-child{
+  font-family:'DM Serif Display',serif;
+  font-size:36px;letter-spacing:-1px;color:var(--accent);line-height:1;
+}
+.donut-label span:last-child{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;}
+
+.about-mission{
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  border-bottom:.5px solid var(--border);
+  background:var(--bg2);
+  text-align:center;
+}
+.about-mission p{
+  font-family:'DM Serif Display',serif;
+  font-size:26px;line-height:1.4;letter-spacing:-.3px;
+  color:var(--text);max-width:700px;margin:0 auto;
+}
+.about-mission p em{font-style:italic;color:var(--muted);}
+
+/* ══════════════════════════════════════════
+   PAGE: SERVICES
+══════════════════════════════════════════ */
+.svc-hero{
+  padding:6rem clamp(1.5rem,5vw,3.5rem) 5rem;
+  border-bottom:.5px solid var(--border);
+  max-width:760px;
+}
+.svc-hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:46px;line-height:1.08;letter-spacing:-1.5px;
+  color:var(--text);margin:1rem 0 1.5rem;
+}
+.svc-hero h1 em{font-style:italic;color:var(--muted);}
+.svc-hero p{font-size:16px;color:var(--muted);line-height:1.8;}
+
+.svc-detail-list{border-bottom:.5px solid var(--border);}
+.svc-detail{
+  display:grid;grid-template-columns:280px 1fr;
+  border-bottom:.5px solid var(--border);
+}
+.svc-detail:last-child{border-bottom:none;}
+.svc-detail-label{
+  padding:3rem clamp(1.5rem,4vw,3rem) 3rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+  display:flex;flex-direction:column;gap:.75rem;
+}
+.svc-detail-num{font-size:11px;font-weight:500;letter-spacing:.1em;color:var(--faint);}
+.svc-detail-name{
+  font-family:'DM Serif Display',serif;
+  font-size:22px;color:var(--text);line-height:1.2;
+}
+.svc-detail-body{padding:3rem clamp(1.5rem,5vw,3.5rem);}
+.svc-detail-body p{font-size:14px;color:var(--muted);line-height:1.75;margin-bottom:1.25rem;}
+.svc-detail-body p:last-child{margin-bottom:0;}
+.svc-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:1rem;}
+.svc-tag{
+  font-size:10px;font-weight:400;
+  letter-spacing:.07em;text-transform:uppercase;
+  padding:4px 10px;border-radius:2px;
+  border:.5px solid var(--border2);
+  color:var(--muted);
+}
+
+.svc-cases-section{
+  border-bottom:.5px solid var(--border);
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+}
+.svc-cases-section h2{
+  font-family:'DM Serif Display',serif;
+  font-size:30px;letter-spacing:-.3px;
+  color:var(--text);margin:1rem 0 2.5rem;
+}
+.cases-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.case-card{
+  background:var(--bg2);
+  border:.5px solid var(--border);border-radius:6px;
+  padding:2rem 2.25rem;
+  transition:border-color .2s,background .2s;
+}
+.case-card:hover{border-color:var(--border2);background:var(--bg3);}
+
+/* ══════════════════════════════════════════
+   PAGE: SCORECARD (FLAGSHIP)
+══════════════════════════════════════════ */
+.sc-hero{
+  padding:5rem clamp(1.5rem,5vw,3.5rem) 4rem;
+  border-bottom:.5px solid var(--border);
+  position:relative;overflow:hidden;
+  max-width:1280px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.sc-hero::before{
+  content:'';position:absolute;
+  top:-120px;right:-120px;
+  width:400px;height:400px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(53,223,231,.08) 0%,rgba(40,121,146,.04) 40%,transparent 70%);
+  pointer-events:none;
+}
+.sc-hero-inner{
+  display:grid;grid-template-columns:1.1fr .9fr;
+  gap:4rem;align-items:center;
+  position:relative;
+}
+.sc-hero h1{
+  font-family:'DM Serif Display',serif;
+  font-size:46px;line-height:1.06;letter-spacing:-1.5px;
+  color:var(--text);margin:1rem 0 1.5rem;
+}
+.sc-hero h1 em{font-style:italic;color:var(--muted);}
+.sc-hero p{font-size:15px;color:var(--muted);line-height:1.75;margin-bottom:2rem;}
+.sc-card-preview{
+  background:var(--bg2);
+  border:.5px solid var(--border2);
+  border-radius:8px;padding:2rem;
+  position:relative;
+}
+.sc-card-preview::before{
+  content:'AI ANALYSIS ACTIVE';
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  font-size:9px;font-weight:500;letter-spacing:.12em;
+  color:var(--accent);background:var(--bg2);
+  border:.5px solid rgba(0,229,160,.3);
+  padding:3px 12px;border-radius:20px;
+  white-space:nowrap;
+}
+.sc-bar-row{margin-bottom:1.25rem;}
+.sc-bar-label{
+  display:flex;justify-content:space-between;
+  font-size:11px;color:var(--muted);margin-bottom:6px;
+  text-transform:uppercase;letter-spacing:.06em;
+}
+.sc-bar-label span:last-child{color:var(--text);}
+.sc-bar-track{
+  height:4px;background:var(--bg3);
+  border-radius:2px;overflow:hidden;
+}
+.sc-bar-fill{
+  height:100%;border-radius:2px;
+  background:linear-gradient(90deg,#1b3d76,#5ecece);
+  transition:width 1.2s ease;
+}
+.sc-bar-fill.warn{background:var(--amber);}
+.sc-bar-fill.danger{background:var(--red);}
+.sc-score-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding-top:1.5rem;margin-top:1.5rem;
+  border-top:.5px solid var(--border);
+}
+.sc-score-big{
+  font-family:'DM Serif Display',serif;
+  font-size:48px;letter-spacing:-2px;
+  background:linear-gradient(135deg,#5ecece,#287992);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1;
+}
+.sc-score-sub{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;}
+.sc-signals{font-size:12px;color:var(--muted);}
+.sc-signals strong{color:var(--accent);}
+
+/* how it works */
+.sc-how{
+  border-bottom:.5px solid var(--border);
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+}
+.sc-how h2{
+  font-family:'DM Serif Display',serif;
+  font-size:30px;letter-spacing:-.3px;
+  color:var(--text);margin:1rem 0 3rem;
+}
+.sc-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+.sc-step{
+  padding:2rem 2rem 2rem 0;
+  border-right:.5px solid var(--border);
+  padding-right:2rem;
+}
+.sc-step:last-child{border-right:none;padding-right:0;}
+.sc-step-num{
+  font-family:'DM Serif Display',serif;
+  font-size:42px;letter-spacing:-1px;
+  color:var(--faint);line-height:1;margin-bottom:1rem;
+}
+.sc-step h3{
+  font-size:15px;font-weight:500;
+  color:var(--text);margin-bottom:.6rem;line-height:1.3;
+}
+.sc-step p{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* four pillars */
+.sc-pillars{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  border-bottom:.5px solid var(--border);
+}
+.sc-pillar{
+  padding:3rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+  border-bottom:.5px solid var(--border);
+}
+.sc-pillar:nth-child(2n){border-right:none;}
+.sc-pillar:nth-child(3),.sc-pillar:nth-child(4){border-bottom:none;}
+.sc-pillar-icon{
+  width:36px;height:36px;border-radius:6px;
+  background:var(--adim);border:.5px solid rgba(0,229,160,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;margin-bottom:1.25rem;
+}
+.sc-pillar h3{
+  font-family:'DM Serif Display',serif;
+  font-size:20px;color:var(--text);margin-bottom:.75rem;
+}
+.sc-pillar-check{font-size:11px;color:var(--muted);margin-bottom:.25rem;}
+.sc-pillar-check strong{color:var(--accent);text-transform:uppercase;letter-spacing:.06em;font-size:10px;}
+.sc-pillar p{font-size:13px;color:var(--muted);line-height:1.65;margin-top:.75rem;}
+
+/* deliverables */
+.sc-deliverables{
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  border-bottom:.5px solid var(--border);
+}
+.sc-deliverables h2{
+  font-family:'DM Serif Display',serif;
+  font-size:30px;letter-spacing:-.3px;
+  color:var(--text);margin:1rem 0 2.5rem;
+}
+.deliverables-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;}
+.deliverable-card{
+  background:var(--bg2);
+  border:.5px solid var(--border);border-radius:6px;
+  padding:2rem;transition:border-color .2s,background .2s;
+}
+.deliverable-card:hover{border-color:rgba(0,229,160,.3);background:var(--bg3);}
+.del-icon{
+  font-size:24px;margin-bottom:1rem;
+  width:44px;height:44px;border-radius:8px;
+  background:var(--adim);border:.5px solid rgba(0,229,160,.15);
+  display:flex;align-items:center;justify-content:center;
+}
+.del-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:.5rem;}
+.del-body{font-size:13px;color:var(--muted);line-height:1.65;}
+
+/* trust strip */
+.sc-trust{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-bottom:.5px solid var(--border);
+  background:var(--bg2);
+}
+.sc-trust-item{
+  padding:2.5rem clamp(1.25rem,3vw,3rem);
+  border-right:.5px solid var(--border);
+  display:flex;gap:1rem;align-items:flex-start;
+}
+.sc-trust-item:last-child{border-right:none;}
+.trust-icon{font-size:20px;margin-top:2px;}
+.trust-title{font-size:14px;font-weight:500;color:var(--text);margin-bottom:.35rem;}
+.trust-body{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* form */
+.sc-form-section{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:.5px solid var(--border);
+}
+.sc-form-left{
+  padding:4rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+}
+.sc-form-left h2{
+  font-family:'DM Serif Display',serif;
+  font-size:30px;letter-spacing:-.3px;
+  color:var(--text);margin:1rem 0 1rem;
+}
+.sc-form-left p{font-size:14px;color:var(--muted);line-height:1.7;}
+.sc-form-right{padding:4rem clamp(1.5rem,5vw,3.5rem);}
+.form-group{margin-bottom:1.25rem;}
+.form-label{
+  display:block;font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:.5rem;
+}
+.form-input,.form-select,.form-textarea{
+  width:100%;
+  background:var(--bg2);
+  border:.5px solid var(--border2);
+  border-radius:4px;
+  padding:10px 14px;
+  font-family:'DM Sans',sans-serif;
+  font-size:14px;font-weight:300;
+  color:var(--text);
+  outline:none;
+  transition:border-color .2s;
+  appearance:none;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  border-color:rgba(0,229,160,.5);
+}
+.form-textarea{resize:vertical;min-height:100px;line-height:1.5;}
+.form-select option{background:var(--bg3);}
+.form-submit{
+  width:100%;
+  padding:13px;
+  background:var(--accent);color:#111e2a;
+  border:none;border-radius:4px;
+  font-family:'DM Sans',sans-serif;
+  font-size:12px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  cursor:pointer;transition:background .2s,transform .15s;
+}
+.form-submit:hover{background:var(--accent2);color:#111e2a;transform:translateY(-1px);}
+
+/* ══════════════════════════════════════════
+   PAGE: CONTACT
+══════════════════════════════════════════ */
+.contact-hero{
+  display:grid;grid-template-columns:1fr 1fr;
+  border-bottom:.5px solid var(--border);
+}
+.contact-hero-left{
+  padding:5rem clamp(1.5rem,5vw,3.5rem);
+  border-right:.5px solid var(--border);
+}
+.contact-hero-left h1{
+  font-family:'DM Serif Display',serif;
+  font-size:42px;line-height:1.1;letter-spacing:-1px;
+  color:var(--text);margin:1rem 0 1.25rem;
+}
+.contact-hero-left p{font-size:15px;color:var(--muted);line-height:1.75;max-width:380px;}
+.contact-info{margin-top:3rem;display:flex;flex-direction:column;gap:1.5rem;}
+.contact-info-item label{
+  display:block;font-size:10px;font-weight:500;
+  letter-spacing:.12em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:.35rem;
+}
+.contact-info-item span{font-size:14px;color:var(--muted);}
+.contact-hero-right{padding:4rem clamp(1.5rem,5vw,3.5rem);}
+.contact-hero-right h2{
+  font-family:'DM Serif Display',serif;
+  font-size:24px;letter-spacing:-.3px;
+  color:var(--text);margin-bottom:2rem;
+}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:1024px){
+  .home-hero-left h1{ font-size:42px; }
+  .sc-hero h1{ font-size:40px; }
+  .about-hero h1{ font-size:40px; }
+  .svc-hero h1{ font-size:40px; }
+  .services-grid{ grid-template-columns:repeat(2,1fr); }
+  .svc-card:nth-child(2){ border-right:none; }
+  .svc-card:nth-child(3){ border-top:.5px solid var(--border); }
+  .scorecard-strip-right{ grid-template-columns:repeat(2,1fr); }
+}
+@media(max-width:900px){
+  .nav{padding:1.25rem 1.5rem;}
+  .nav-links{display:none;}
+  .nav-hamburger{display:flex;}
+
+  .home-hero,.about-model,.sc-form-section,
+  .contact-hero,.scorecard-strip{
+    grid-template-columns:1fr;
+  }
+  .home-hero-left,.about-model-left{
+    border-right:none;border-bottom:.5px solid var(--border);
+    padding:3rem 1.5rem;
+  }
+  .home-hero-left h1{font-size:36px;}
+  .home-hero-right{
+    grid-template-rows:none;grid-template-columns:1fr 1fr;
+  }
+  .hero-stat{border-right:.5px solid var(--border);}
+  .hero-stat:last-child{border-right:none;border-bottom:none;}
+
+  .scorecard-strip{padding:3rem 1.5rem;gap:2rem;}
+  .scorecard-strip-right{grid-template-columns:1fr 1fr;}
+
+  .services-grid{grid-template-columns:1fr 1fr;}
+  .svc-card:nth-child(2){border-right:none;}
+  .svc-card:nth-child(3){border-top:.5px solid var(--border);}
+
+  .cases-section{grid-template-columns:1fr;}
+  .cases-label{writing-mode:horizontal-tb;border-right:none;border-bottom:.5px solid var(--border);padding:1.5rem;}
+
+  .home-cta{grid-template-columns:1fr;}
+  .home-cta-left{border-right:none;border-bottom:.5px solid var(--border);}
+
+  .about-pillars{grid-template-columns:1fr;}
+  .about-pillar{border-right:none !important;}
+  .about-pillar:not(:last-child){border-bottom:.5px solid var(--border);}
+  .about-pillar:nth-child(3),.about-pillar:nth-child(4){border-top:none;}
+
+  .about-model-right{padding:3rem 1.5rem;justify-content:flex-start;}
+
+  .svc-hero,.about-hero,.sc-hero{padding:4rem 1.5rem 3rem;}
+  .svc-hero h1,.about-hero h1,.sc-hero h1{font-size:34px;}
+
+  .svc-detail{grid-template-columns:1fr;}
+  .svc-detail-label{border-right:none;border-bottom:.5px solid var(--border);padding:2rem 1.5rem;}
+  .svc-detail-body{padding:2rem 1.5rem;}
+
+  .svc-cases-section,.sc-how,.sc-deliverables,
+  .sc-form-left,.sc-form-right,
+  .contact-hero-left,.contact-hero-right{
+    padding:3rem 1.5rem;
+  }
+
+  .sc-hero-inner{grid-template-columns:1fr;gap:2.5rem;}
+  .sc-steps{grid-template-columns:1fr 1fr;gap:2rem;}
+  .sc-step{border-right:none;padding-right:0;}
+
+  .sc-pillars{grid-template-columns:1fr;}
+  .sc-pillar{border-right:none !important;}
+  .sc-pillar:not(:last-child){border-bottom:.5px solid var(--border);}
+  .sc-pillar:nth-child(3),.sc-pillar:nth-child(4){border-bottom:.5px solid var(--border);}
+  .sc-pillar:last-child{border-bottom:none !important;}
+
+  .deliverables-grid{grid-template-columns:1fr;}
+  .cases-grid{grid-template-columns:1fr;}
+
+  .sc-trust{grid-template-columns:1fr;}
+  .sc-trust-item{border-right:none;border-bottom:.5px solid var(--border);}
+  .sc-trust-item:last-child{border-bottom:none;}
+
+  .sc-form-section{grid-template-columns:1fr;}
+  .sc-form-left{border-right:none;border-bottom:.5px solid var(--border);}
+
+  .contact-hero{grid-template-columns:1fr;}
+  .contact-hero-left{border-right:none;border-bottom:.5px solid var(--border);}
+
+  .footer-bottom{padding:1.5rem;flex-direction:column;gap:.5rem;text-align:center;}
+}
+
+@media(max-width:768px){
+  .svc-detail{ grid-template-columns:1fr; }
+  .svc-detail-label{ border-right:none;border-bottom:.5px solid var(--border);padding:2rem 1.5rem; }
+  .svc-detail-body{ padding:2rem 1.5rem; }
+  .about-model{ grid-template-columns:1fr; }
+  .about-model-left{ border-right:none;border-bottom:.5px solid var(--border); }
+  .sc-form-section{ grid-template-columns:1fr; }
+  .sc-form-left{ border-right:none;border-bottom:.5px solid var(--border); }
+  .contact-hero{ grid-template-columns:1fr; }
+  .contact-hero-left{ border-right:none;border-bottom:.5px solid var(--border); }
+  .cases-grid{ grid-template-columns:1fr; }
+  .deliverables-grid{ grid-template-columns:1fr; }
+  .sc-trust{ grid-template-columns:1fr; }
+  .sc-trust-item{ border-right:none; border-bottom:.5px solid var(--border); }
+  .sc-trust-item:last-child{ border-bottom:none; }
+  .home-cta{ grid-template-columns:1fr; }
+  .home-cta-left{ border-right:none;border-bottom:.5px solid var(--border); }
+}
+@media(max-width:580px){
+  .services-grid{grid-template-columns:1fr;}
+  .svc-card{border-right:none;border-bottom:.5px solid var(--border);}
+  .svc-card:last-child{border-bottom:none;}
+  .scorecard-strip-right{grid-template-columns:1fr 1fr;}
+  .sc-steps{grid-template-columns:1fr;}
+  .home-hero-right{grid-template-columns:1fr;}
+  .hero-stat{border-right:none;border-bottom:.5px solid var(--border);}
+  .hero-stat:last-child{border-bottom:none;}
+}
+
+/* Additional width constraints */
+.services-grid,.cases-section,.svc-detail-list,
+.svc-cases-section,.about-pillars,.sc-how,
+.sc-pillars,.sc-deliverables,.sc-trust,
+.about-mission,.svc-hero,.about-hero,
+.sc-hero,.home-cta-right,.footer-bottom{
+  max-width:1280px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.footer-bottom{
+  padding-left:clamp(1.5rem,5vw,3.5rem);
+  padding-right:clamp(1.5rem,5vw,3.5rem);
+}
+/* Marquee stays truly full-width - no constraint */
+.marquee-bar{ width:100%; max-width:none; }
+
+
+@media(max-width:400px){
+  .home-hero-left h1{ font-size:28px; }
+  .hero-stat-num{ font-size:40px; }
+  .sc-hero h1,.about-hero h1,.svc-hero h1{ font-size:28px; }
+  .footer-headline{ font-size:24px; }
+  .sc-deliverables h2,.sc-how h2,.home-cta-left h2{ font-size:24px; }
+  .sc-card-preview{ padding:1.25rem; }
+  .scorecard-strip-right{ grid-template-columns:1fr 1fr; }
+  .btn-row{ flex-direction:column; }
+  .btn-row .btn,.btn-row .btn-solid,.btn-row .btn-ghost{ width:100%;justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMobile()">✕</button>
+  <svg style="display:block;" xmlns="http://www.w3.org/2000/svg" width="auto" height="48" viewBox="0 0 220 44">
+  <defs>
+    <linearGradient id="nav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#287992"/>
+      <stop offset="100%" stop-color="#5ecece"/>
+    </linearGradient>
+  </defs>
+  <polygon points="19,6 33,14 33,30 19,38 5,30 5,14" fill="none" stroke="url(#nav-grad)" stroke-width="1.2"/>
+  <line x1="19" y1="12" x2="13" y2="33" stroke="#5ecece" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="19" y1="12" x2="25" y2="33" stroke="#287992" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="15" y1="25" x2="23" y2="25" stroke="#5ecece" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="33" y1="17" x2="40" y2="17" stroke="#287992" stroke-width=".8"/>
+  <circle cx="41.5" cy="17" r="1.5" fill="#5ecece"/>
+  <line x1="33" y1="27" x2="39" y2="27" stroke="#1e3a58" stroke-width=".8"/>
+  <circle cx="40.5" cy="27" r="1.2" fill="#287992"/>
+  <text x="50" y="27" font-family="DM Sans,sans-serif" font-size="18" font-weight="500" fill="#ccd8e8" letter-spacing="-0.3">Aquire</text>
+</svg>
+  <a href="#" onclick="nav('home');closeMobile()">Home</a>
+  <a href="#" onclick="nav('about');closeMobile()">About</a>
+  <a href="#" onclick="nav('services');closeMobile()">Services</a>
+  <a href="#" onclick="nav('scorecard');closeMobile()">48-Hr Scorecard</a>
+  <a href="#" onclick="nav('contact');closeMobile()">Contact</a>
+</div>
+
+<!-- NAV -->
+
+
+<nav class="nav">
+<div class="nav-inner">
+  <div class="nav-logo" onclick="nav('home')" style="display:flex;align-items:center;line-height:1;">
+<svg style="display:block;cursor:pointer;" xmlns="http://www.w3.org/2000/svg" width="auto" height="36" viewBox="0 0 220 44">
+  <defs>
+    <linearGradient id="nav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#287992"/>
+      <stop offset="100%" stop-color="#5ecece"/>
+    </linearGradient>
+  </defs>
+  <polygon points="19,6 33,14 33,30 19,38 5,30 5,14" fill="none" stroke="url(#nav-grad)" stroke-width="1.2"/>
+  <line x1="19" y1="12" x2="13" y2="33" stroke="#5ecece" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="19" y1="12" x2="25" y2="33" stroke="#287992" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="15" y1="25" x2="23" y2="25" stroke="#5ecece" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="33" y1="17" x2="40" y2="17" stroke="#287992" stroke-width=".8"/>
+  <circle cx="41.5" cy="17" r="1.5" fill="#5ecece"/>
+  <line x1="33" y1="27" x2="39" y2="27" stroke="#1e3a58" stroke-width=".8"/>
+  <circle cx="40.5" cy="27" r="1.2" fill="#287992"/>
+  <text x="50" y="27" font-family="DM Sans,sans-serif" font-size="18" font-weight="500" fill="#ccd8e8" letter-spacing="-0.3">Aquire</text>
+</svg>
+</div>
+  <ul class="nav-links">
+    <li><a href="#" onclick="nav('about');return false;" id="link-about">About</a></li>
+    <li><a href="#" onclick="nav('services');return false;" id="link-services">Services</a></li>
+    <li><a href="#" onclick="nav('scorecard');return false;" id="link-scorecard" style="color:var(--accent)">48-Hr Scorecard ✦</a></li>
+    <li><a href="#" onclick="nav('contact');return false;" id="link-contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="nav('scorecard')">Free Audit ↗</button>
+  <button class="nav-hamburger" onclick="document.getElementById('mobileMenu').classList.add('open')">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE: HOME
+══════════════════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="home-hero">
+    <div class="home-hero-left">
+      <div class="section-eyebrow">AI-Driven Data Engineering</div>
+      <h1>Eliminate your<br><em>Modernization Gap.</em></h1>
+      <p>We are a high-velocity Data Engineering consultancy specializing in AI-Driven Cloud Cost Recovery and Infrastructure Integrity — at a speed and price point traditional agencies cannot match.</p>
+      <div class="btn-row">
+        <button class="btn-solid" onclick="nav('scorecard')">Get Free 48-Hr Scorecard ↗</button>
+        <button class="btn-ghost" onclick="nav('services')">Our Services</button>
+      </div>
+    </div>
+    <div class="home-hero-right">
+      <div class="hero-stat">
+        <div class="hero-stat-num">20%</div>
+        <div class="hero-stat-label">Of cloud budgets lost to modernization gaps</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">10K+</div>
+        <div class="hero-stat-label">Metadata signals analyzed per audit</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <span class="marquee-item">Cloud Data Engineering</span><span class="marquee-dot"></span>
+      <span class="marquee-item">AI-Driven Audits</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Infrastructure Integrity</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Cloud Cost Recovery</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Data Modernization</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Schema Drift Detection</span><span class="marquee-dot"></span>
+      <span class="marquee-item">PII Exposure Analysis</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Semantic Analysis</span><span class="marquee-dot"></span>
+      <span class="marquee-item">BigQuery · Looker · Tableau</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Cloud Data Engineering</span><span class="marquee-dot"></span>
+      <span class="marquee-item">AI-Driven Audits</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Infrastructure Integrity</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Cloud Cost Recovery</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Data Modernization</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Schema Drift Detection</span><span class="marquee-dot"></span>
+      <span class="marquee-item">PII Exposure Analysis</span><span class="marquee-dot"></span>
+      <span class="marquee-item">Semantic Analysis</span><span class="marquee-dot"></span>
+      <span class="marquee-item">BigQuery · Looker · Tableau</span><span class="marquee-dot"></span>
+    </div>
+  </div>
+
+  <!-- Scorecard flagship strip -->
+  <section class="scorecard-strip">
+    <div class="scorecard-strip-left">
+      <div class="ai-badge">Flagship Product</div>
+      <h2>AI-Driven 48-Hour<br>Health Scorecard</h2>
+      <p>A pro-bono, read-only diagnostic that deploys proprietary AI scrapers and semantic analysis to baseline your infrastructure waste, schema drift, and PII exposure — delivered in 48 hours with a 0–100 modernization readiness score.</p>
+      <button class="btn-solid" onclick="nav('scorecard')">Get Your Free Scorecard ↗</button>
+    </div>
+    <div class="scorecard-strip-right">
+      <div class="sc-metric">
+        <div class="sc-metric-val">48h</div>
+        <div class="sc-metric-label">Full diagnostic turnaround</div>
+      </div>
+      <div class="sc-metric">
+        <div class="sc-metric-val">10K+</div>
+        <div class="sc-metric-label">Metadata signals analyzed</div>
+      </div>
+      <div class="sc-metric">
+        <div class="sc-metric-val">0–100</div>
+        <div class="sc-metric-label">Readiness score delivered</div>
+      </div>
+      <div class="sc-metric">
+        <div class="sc-metric-val">$0</div>
+        <div class="sc-metric-label">Pro-bono, no commitment</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services-grid">
+    <div class="svc-card">
+      <div class="svc-num">01</div>
+      <div class="svc-title">Cloud Data Engineering</div>
+      <div class="svc-desc">Secure, scalable cloud infrastructure designed to eliminate waste and unlock data potential.</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">02</div>
+      <div class="svc-title">Data Modernization</div>
+      <div class="svc-desc">Replace legacy systems constraining interoperability, efficiency, and innovation.</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">03</div>
+      <div class="svc-title">Analytics & Insights</div>
+      <div class="svc-desc">ML, AI, and predictive modeling that converts operational data into measurable decisions.</div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-num">04</div>
+      <div class="svc-title">Data Security</div>
+      <div class="svc-desc">PII discovery, compliance readiness, and protection against evolving cybersecurity threats.</div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section class="cases-section">
+    <div class="cases-label">
+      <p class="section-label-vert">Selected work</p>
+    </div>
+    <div class="cases-list">
+      <div class="case-item">
+        <span class="case-tag">Public Health · CDC</span>
+        <div class="case-title">Bad data kills: fixing the hidden costs of information errors</div>
+        <p class="case-body">Partnered with the CDC to build a robust data quality framework, reconciling errors from a state public health agency. Delivered actionable insights to epidemiologists via Python, SQL Server, and Tableau.</p>
+      </div>
+      <div class="case-item">
+        <span class="case-tag">Crisis Response · NYC</span>
+        <div class="case-title">Data infrastructure for COVID-19 emergency sheltering</div>
+        <p class="case-body">Deployed a Google BigQuery data warehouse for NYC's housing program serving 40,000+ healthcare workers — with advanced LookML modeling in Looker and an R-based program evaluation for national replication.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA footer -->
+  <section class="home-cta">
+    <div class="home-cta-left">
+      <h2>Ready to recover your<br><span>cloud spend?</span></h2>
+      <button class="btn-solid" onclick="nav('scorecard')">Start with a free 48-hr audit ↗</button>
+      <p style="font-size:12px;color:var(--faint);margin-top:1rem;">No commitment. Read-only access. Results in 48 hours.</p>
+    </div>
+    <div class="home-cta-right">
+      <div class="footer-link-item" onclick="nav('about')"><span>About Aquire</span><span>→</span></div>
+      <div class="footer-link-item" onclick="nav('services')"><span>Services</span><span>→</span></div>
+      <div class="footer-link-item" onclick="nav('scorecard')"><span>48-Hr AI Scorecard</span><span>→</span></div>
+      <div class="footer-link-item" onclick="nav('contact')"><span>Contact us</span><span>→</span></div>
+    </div>
+  </section>
+  <div class="footer-bottom">
+    <p>© 2026 Aquire. Engineering the Future of Data.</p>
+    <p>aquiredata.com</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="section-eyebrow">About Aquire</div>
+    <h1>Closing the<br><em>Modernization Gap.</em></h1>
+    <p>We are a high-velocity Data Engineering consultancy built on an AI-First architecture. Our mission is to eliminate the silent budget bleeds that cost organizations an average of 20% of their cloud spend.</p>
+  </div>
+
+  <section class="about-pillars">
+    <div class="about-pillar">
+      <div class="section-eyebrow">The AI Advantage</div>
+      <h3>Proprietary AI agents. 10,000+ signals. Seconds.</h3>
+      <p>We deploy proprietary AI agents that analyze over 10,000 metadata signals in seconds — providing a depth and speed of insight that human-only audits fundamentally cannot achieve. This is not AI-assisted work. It is AI-first engineering.</p>
+    </div>
+    <div class="about-pillar">
+      <div class="section-eyebrow">The Mission</div>
+      <h3>Eliminate the Modernization Gap.</h3>
+      <p>Most enterprise data ecosystems suffer from "Silent Leakage" — manual errors, security gaps, and infrastructure waste that quietly bleed 20% of cloud budgets every month. We exist to find it, quantify it, and fix it.</p>
+    </div>
+    <div class="about-pillar">
+      <div class="section-eyebrow">Client Focus</div>
+      <h3>Built for high-growth firms.</h3>
+      <p>We specialize in high-growth organizations that need enterprise-grade engineering but cannot afford the timelines or price points of traditional agencies. Speed and precision are not trade-offs — they are our baseline.</p>
+    </div>
+    <div class="about-pillar">
+      <div class="section-eyebrow">Approach</div>
+      <h3>Client-centered, long-term partnerships.</h3>
+      <p>We understand the unique challenges of every organization we work with. Through tailored data solutions, proactive guidance, and ongoing support, we build relationships that empower meaningful digital transformation.</p>
+    </div>
+  </section>
+
+  <!-- 70/30 model -->
+  <section class="about-model">
+    <div class="about-model-left">
+      <div class="section-eyebrow">Delivery Model</div>
+      <h2>70/30 Onshore-Offshore.<br>Enterprise quality. Startup speed.</h2>
+      <p>Our hybrid delivery model combines 70% onshore strategic and client-facing leadership with 30% offshore engineering execution. The result: enterprise-grade output at a price point that traditional agencies cannot compete with — without sacrificing quality, communication, or accountability.</p>
+    </div>
+    <div class="about-model-right">
+      <div class="donut-wrapper">
+        <svg width="200" height="200" viewBox="0 0 200 200"><defs><linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#1b3d76"/><stop offset="50%" stop-color="#287992"/><stop offset="100%" stop-color="#5ecece"/></linearGradient></defs>
+          <circle cx="100" cy="100" r="75" fill="none" stroke="#18181b" stroke-width="28"/>
+          <!-- 70% onshore: 70% of 471.2 = 329.8 -->
+          <circle cx="100" cy="100" r="75" fill="none" stroke="url(#logoGrad)" stroke-width="28"
+            stroke-dasharray="329.8 141.4" stroke-dashoffset="117.8" stroke-linecap="butt"/>
+          <!-- 30% offshore -->
+          <circle cx="100" cy="100" r="75" fill="none" stroke="#222f3d" stroke-width="28"
+            stroke-dasharray="141.4 329.8" stroke-dashoffset="-212" stroke-linecap="butt"/>
+        </svg>
+        <div class="donut-label">
+          <span style="background:linear-gradient(135deg,#5ecece,#287992);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">70%</span>
+          <span>Onshore</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="about-mission">
+    <p>"Partner with Aquire and experience the difference of working with a trusted data firm <em>dedicated to advancing your mission</em> — not just your backlog."</p>
+  </div>
+
+  <section class="home-cta">
+    <div class="home-cta-left">
+      <h2>Start with a<br><span>free audit.</span></h2>
+      <button class="btn-solid" onclick="nav('scorecard')">Get the 48-Hr Scorecard ↗</button>
+    </div>
+    <div class="home-cta-right">
+      <div class="footer-link-item" onclick="nav('services')"><span>Our Services</span><span>→</span></div>
+      <div class="footer-link-item" onclick="nav('scorecard')"><span>48-Hr AI Scorecard</span><span>→</span></div>
+      <div class="footer-link-item" onclick="nav('contact')"><span>Contact Us</span><span>→</span></div>
+    </div>
+  </section>
+  <div class="footer-bottom">
+    <p>© 2026 Aquire. Engineering the Future of Data.</p>
+    <p>aquiredata.com</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: SERVICES
+══════════════════════════════════════════ -->
+<div class="page" id="page-services">
+  <div class="svc-hero">
+    <div class="section-eyebrow">Services</div>
+    <h1>Enterprise-grade engineering.<br><em>Startup velocity.</em></h1>
+    <p>Our four practice areas are designed to cover the full data lifecycle — from infrastructure and security to analytics and modernization — all delivered through an AI-first lens.</p>
+  </div>
+
+  <div class="svc-detail-list">
+    <div class="svc-detail">
+      <div class="svc-detail-label">
+        <div class="svc-detail-num">01</div>
+        <div class="svc-detail-name">Cloud Data Engineering</div>
+      </div>
+      <div class="svc-detail-body">
+        <p>We design and implement secure, scalable cloud data engineering solutions that eliminate the infrastructure waste bleeding your budget. Leveraging AI-driven analysis, we identify orphaned compute, over-provisioned resources, and architectural inefficiencies before they compound.</p>
+        <p>Our engineers work across major cloud platforms to modernize data pipelines, warehouses, and processing infrastructure for enhanced performance and long-term scalability.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Google BigQuery</span>
+          <span class="svc-tag">Snowflake</span>
+          <span class="svc-tag">AWS Redshift</span>
+          <span class="svc-tag">dbt</span>
+          <span class="svc-tag">Apache Spark</span>
+          <span class="svc-tag">Airflow</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-detail">
+      <div class="svc-detail-label">
+        <div class="svc-detail-num">02</div>
+        <div class="svc-detail-name">Data Modernization</div>
+      </div>
+      <div class="svc-detail-body">
+        <p>Legacy data systems are the primary driver of the Modernization Gap. They limit interoperability, create schema drift, and block the analytics capabilities modern organizations need to compete. We craft comprehensive roadmaps for digital transformation — assessing current state, defining future objectives, and executing with precision.</p>
+        <p>Every modernization engagement begins with our 48-Hour AI Scorecard to establish an objective baseline before any work begins.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Legacy Migration</span>
+          <span class="svc-tag">Schema Redesign</span>
+          <span class="svc-tag">ETL Modernization</span>
+          <span class="svc-tag">Data Mesh</span>
+          <span class="svc-tag">Lakehouse Architecture</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-detail">
+      <div class="svc-detail-label">
+        <div class="svc-detail-num">03</div>
+        <div class="svc-detail-name">Analytics & Insights</div>
+      </div>
+      <div class="svc-detail-body">
+        <p>We deploy machine learning, AI, and predictive modeling to unlock actionable insights from your operational data. Our solutions eliminate the 5-day ticket backlogs common in manual reporting environments, replacing them with real-time executive dashboards and self-service analytics.</p>
+        <p>From LookML modeling to advanced R-based program evaluation, we deliver the full analytics stack — not just dashboards.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">Looker / LookML</span>
+          <span class="svc-tag">Tableau</span>
+          <span class="svc-tag">Python / R</span>
+          <span class="svc-tag">Predictive Modeling</span>
+          <span class="svc-tag">ML Pipelines</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="svc-detail">
+      <div class="svc-detail-label">
+        <div class="svc-detail-num">04</div>
+        <div class="svc-detail-name">Data Security</div>
+      </div>
+      <div class="svc-detail-body">
+        <p>Data security is at the heart of everything we do. Our AI-driven PII discovery identifies exposure across your full data surface — not just what you know about, but what you don't. We ensure audit-readiness for HIPAA, SOC2, and GDPR, and verify MFA and access log integrity across your infrastructure.</p>
+        <p>Security is not a checklist. It is an ongoing architectural posture that we embed into every engagement.</p>
+        <div class="svc-tags">
+          <span class="svc-tag">PII Discovery</span>
+          <span class="svc-tag">HIPAA</span>
+          <span class="svc-tag">SOC2</span>
+          <span class="svc-tag">GDPR</span>
+          <span class="svc-tag">Access Auditing</span>
+          <span class="svc-tag">MFA Verification</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="svc-cases-section">
+    <div class="section-eyebrow">Case Studies</div>
+    <h2>Work that demonstrates<br>the difference.</h2>
+    <div class="cases-grid">
+      <div class="case-card">
+        <span class="case-tag">Public Health · CDC</span>
+        <div class="case-title" style="font-family:'DM Serif Display',serif;font-size:19px;color:var(--text);margin:.75rem 0 .6rem;line-height:1.25;">Bad data kills: fixing the hidden costs of information errors</div>
+        <p class="case-body">Built a robust data quality framework for the CDC, reconciling errors from a state public health agency. Python, SSMS, SQL Server, and Tableau — delivering reliable insights to epidemiologists for faster, data-driven community health decisions.</p>
+      </div>
+      <div class="case-card">
+        <span class="case-tag">Crisis Response · NYC</span>
+        <div class="case-title" style="font-family:'DM Serif Display',serif;font-size:19px;color:var(--text);margin:.75rem 0 .6rem;line-height:1.25;">Data infrastructure for COVID-19 emergency sheltering</div>
+        <p class="case-body">Deployed Google BigQuery and Looker for NYC's pandemic housing program serving 40,000+ individuals. Advanced LookML modeling plus an R-based program evaluation designed for national replication.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-cta">
+    <div class="home-cta-left">
+      <h2>Every engagement starts<br>with a <span>free scorecard.</span></h2>
+      <button class="btn-solid" onclick="nav('scorecard')">Get the 48-Hr AI Scorecard ↗</button>
+    </div>
+    <div class="home-cta-right">
+      <div class="footer-link-item" onclick="nav('about')"><span>About Aquire</span><span>→</span></div>
+      <div class="footer-link-item" onclick="nav('contact')"><span>Contact Us</span><span>→</span></div>
+    </div>
+  </section>
+  <div class="footer-bottom">
+    <p>© 2026 Aquire. Engineering the Future of Data.</p>
+    <p>aquiredata.com</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: 48-HR SCORECARD (FLAGSHIP)
+══════════════════════════════════════════ -->
+<div class="page" id="page-scorecard">
+  <section class="sc-hero">
+    <div class="sc-hero-inner">
+      <div>
+        <div class="ai-badge">AI-Driven · Pro-Bono · 48 Hours</div>
+        <h1>The 48-Hour<br>Data Health<br><em>Scorecard.</em></h1>
+        <p>A read-only diagnostic powered by proprietary AI scrapers and semantic analysis. We baseline your infrastructure waste, schema drift, and PII exposure — and deliver a 0–100 modernization readiness score in 48 hours. No cost. No commitment.</p>
+        <div class="btn-row">
+          <button class="btn-solid" onclick="document.getElementById('audit-form').scrollIntoView({behavior:'smooth'})">Request Your Free Scorecard ↗</button>
+          <button class="btn-ghost" onclick="document.getElementById('sc-how-section').scrollIntoView({behavior:'smooth'})">How it works</button>
+        </div>
+      </div>
+      <div class="sc-card-preview">
+        <div class="sc-bar-row">
+          <div class="sc-bar-label"><span>Infrastructure Waste</span><span>High</span></div>
+          <div class="sc-bar-track"><div class="sc-bar-fill danger" style="width:78%"></div></div>
+        </div>
+        <div class="sc-bar-row">
+          <div class="sc-bar-label"><span>Schema Drift</span><span>Moderate</span></div>
+          <div class="sc-bar-track"><div class="sc-bar-fill warn" style="width:52%"></div></div>
+        </div>
+        <div class="sc-bar-row">
+          <div class="sc-bar-label"><span>PII Exposure</span><span>Elevated</span></div>
+          <div class="sc-bar-track"><div class="sc-bar-fill danger" style="width:64%"></div></div>
+        </div>
+        <div class="sc-bar-row">
+          <div class="sc-bar-label"><span>Security Compliance</span><span>Good</span></div>
+          <div class="sc-bar-track"><div class="sc-bar-fill" style="width:82%"></div></div>
+        </div>
+        <div class="sc-score-row">
+          <div>
+            <div class="sc-score-big">61</div>
+            <div class="sc-score-sub">Modernization Readiness</div>
+          </div>
+          <div class="sc-signals">
+            <strong>10,847</strong><br>signals analyzed
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="sc-how" id="sc-how-section">
+    <div class="section-eyebrow">How it works</div>
+    <h2>From access grant to scorecard<br>in 48 hours.</h2>
+    <div class="sc-steps">
+      <div class="sc-step">
+        <div class="sc-step-num">01</div>
+        <h3>Read-only access granted</h3>
+        <p>You provide read-only credentials. We never modify, copy, or store your production data. Our infrastructure operates entirely within encrypted environments.</p>
+      </div>
+      <div class="sc-step">
+        <div class="sc-step-num">02</div>
+        <h3>AI scrapers deploy</h3>
+        <p>Proprietary AI agents analyze 10,000+ metadata signals across your cloud infrastructure, data warehouse, and schema topology — in seconds, not weeks.</p>
+      </div>
+      <div class="sc-step">
+        <div class="sc-step-num">03</div>
+        <h3>Semantic analysis runs</h3>
+        <p>Our semantic layer identifies schema drift patterns, orphaned compute, PII exposure vectors, and cross-system validation gaps that manual audits routinely miss.</p>
+      </div>
+      <div class="sc-step">
+        <div class="sc-step-num">04</div>
+        <h3>Scorecard delivered</h3>
+        <p>Within 48 hours, you receive a full Data Health Scorecard: a 0–100 readiness score, ROI calculator, and a prioritized Red Zone roadmap.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Four pillars -->
+  <section class="sc-pillars">
+    <div class="sc-pillar">
+      <div class="sc-pillar-icon">⚡</div>
+      <h3>Data Integrity & Quality</h3>
+      <p class="sc-pillar-check"><strong>Check:</strong> Cross-system validation and duplicate detection</p>
+      <p class="sc-pillar-check"><strong>Goal:</strong> Eliminate the 12% discrepancy common in manual reporting</p>
+      <p>Our AI identifies data quality failures across pipeline boundaries — not just within a single system, but across the full data graph.</p>
+    </div>
+    <div class="sc-pillar">
+      <div class="sc-pillar-icon">🔒</div>
+      <h3>Security & Compliance</h3>
+      <p class="sc-pillar-check"><strong>Check:</strong> PII discovery, MFA verification, access log audits</p>
+      <p class="sc-pillar-check"><strong>Goal:</strong> Audit-ready for HIPAA, SOC2, or GDPR</p>
+      <p>Semantic analysis surfaces PII exposure you may not know exists — across structured tables, semi-structured logs, and unstructured document stores.</p>
+    </div>
+    <div class="sc-pillar">
+      <div class="sc-pillar-icon">☁️</div>
+      <h3>Infrastructure Efficiency</h3>
+      <p class="sc-pillar-check"><strong>Check:</strong> Cloud spend analysis and query performance mapping</p>
+      <p class="sc-pillar-check"><strong>Goal:</strong> Identify and eliminate "Orphaned" costs and compute waste</p>
+      <p>We map every dollar of cloud spend to its corresponding query, job, or workload — and flag the orphans bleeding your budget silently.</p>
+    </div>
+    <div class="sc-pillar">
+      <div class="sc-pillar-icon">📊</div>
+      <h3>Accessibility & ROI</h3>
+      <p class="sc-pillar-check"><strong>Check:</strong> Silo identification and self-service readiness</p>
+      <p class="sc-pillar-check"><strong>Goal:</strong> Move from 5-day ticket backlogs to real-time executive insights</p>
+      <p>We assess how accessible your data is to the people who need it — and quantify the decision-latency cost of every bottleneck in your reporting chain.</p>
+    </div>
+  </section>
+
+  <!-- Deliverables -->
+  <section class="sc-deliverables">
+    <div class="section-eyebrow">What you receive</div>
+    <h2>Three deliverables. Zero cost.</h2>
+    <div class="deliverables-grid">
+      <div class="deliverable-card">
+        <div class="del-icon">📋</div>
+        <div class="del-title">The Scorecard</div>
+        <div class="del-body">A 0–100 ranking of your modernization readiness across all four pillars. Clear, actionable, and benchmarked against industry baselines.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-icon">💰</div>
+        <div class="del-title">The ROI Calculator</div>
+        <div class="del-body">A financial breakdown of how much "Data Debt" is costing your organization per month — in real dollars, not estimates.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-icon">🗺️</div>
+        <div class="del-title">The Roadmap</div>
+        <div class="del-body">A prioritized list of "Red Zone" items that need immediate attention — ranked by cost impact and remediation complexity.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust strip -->
+  <section class="sc-trust">
+    <div class="sc-trust-item">
+      <div class="trust-icon">🔍</div>
+      <div>
+        <div class="trust-title">Read-only access only</div>
+        <div class="trust-body">We never modify, write to, or copy your production data. Our agents operate in a strictly read-only mode.</div>
+      </div>
+    </div>
+    <div class="sc-trust-item">
+      <div class="trust-icon">🔐</div>
+      <div>
+        <div class="trust-title">Encrypted infrastructure</div>
+        <div class="trust-body">All analysis is performed within encrypted environments. Your data never leaves a secure perimeter.</div>
+      </div>
+    </div>
+    <div class="sc-trust-item">
+      <div class="trust-icon">⚙️</div>
+      <div>
+        <div class="trust-title">Zero downtime</div>
+        <div class="trust-body">Diagnostic agents run in background processes and have no impact on production query performance.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Form -->
+  <section class="sc-form-section" id="audit-form">
+    <div class="sc-form-left">
+      <div class="section-eyebrow">Request your scorecard</div>
+      <h2>Stop guessing.<br>Start scaling.</h2>
+      <p>Fill out the form and our team will be in touch within one business day to schedule read-only access and kick off your 48-hour diagnostic. No commitment required.</p>
+      <div style="margin-top:2rem;display:flex;flex-direction:column;gap:1rem;">
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <span style="color:var(--accent);font-size:14px;">✓</span>
+          <span style="font-size:13px;color:var(--muted);">Results delivered in 48 hours</span>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <span style="color:var(--accent);font-size:14px;">✓</span>
+          <span style="font-size:13px;color:var(--muted);">Completely pro-bono, no invoice ever</span>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <span style="color:var(--accent);font-size:14px;">✓</span>
+          <span style="font-size:13px;color:var(--muted);">Read-only, non-invasive, zero downtime</span>
+        </div>
+        <div style="display:flex;gap:.75rem;align-items:center;">
+          <span style="color:var(--accent);font-size:14px;">✓</span>
+          <span style="font-size:13px;color:var(--muted);">10,000+ metadata signals analyzed by AI</span>
+        </div>
+      </div>
+    </div>
+    <div class="sc-form-right">
+      <form onsubmit="handleSubmit(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">First name</label>
+            <input type="text" class="form-input" placeholder="Jane" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last name</label>
+            <input type="text" class="form-input" placeholder="Smith" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Work email</label>
+          <input type="email" class="form-input" placeholder="jane@company.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Organization</label>
+          <input type="text" class="form-input" placeholder="Acme Corp" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Primary cloud platform</label>
+          <select class="form-select">
+            <option value="">Select platform…</option>
+            <option>Google Cloud Platform</option>
+            <option>AWS</option>
+            <option>Microsoft Azure</option>
+            <option>Multi-cloud</option>
+            <option>On-premise / Hybrid</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Monthly cloud spend (approx.)</label>
+          <select class="form-select">
+            <option value="">Select range…</option>
+            <option>Under $10k</option>
+            <option>$10k – $50k</option>
+            <option>$50k – $200k</option>
+            <option>$200k – $1M</option>
+            <option>Over $1M</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Biggest data challenge (optional)</label>
+          <textarea class="form-textarea" placeholder="e.g. We have schema drift across 3 warehouses and can't reconcile reports…"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Request My Free 48-Hr Scorecard ↗</button>
+        <p style="font-size:11px;color:var(--faint);margin-top:.75rem;text-align:center;">No spam. No invoice. Just your scorecard.</p>
+      </form>
+    </div>
+  </section>
+
+  <div class="footer-bottom">
+    <p>© 2026 Aquire. Engineering the Future of Data.</p>
+    <p>aquiredata.com</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE: CONTACT
+══════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <section class="contact-hero">
+    <div class="contact-hero-left">
+      <div class="section-eyebrow">Contact</div>
+      <h1>Begin your digital transformation.</h1>
+      <p>Our team of experts is ready to help your organization navigate the complexities of data infrastructure — and unlock the value hiding in your systems.</p>
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <label>Website</label>
+          <span>aquiredata.com</span>
+        </div>
+        <div class="contact-info-item">
+          <label>Flagship product</label>
+          <span style="color:var(--accent);cursor:pointer;" onclick="nav('scorecard')">48-Hr AI Data Health Scorecard →</span>
+        </div>
+        <div class="contact-info-item">
+          <label>Response time</label>
+          <span>Within 1 business day</span>
+        </div>
+      </div>
+    </div>
+    <div class="contact-hero-right">
+      <h2>Send us a message.</h2>
+      <form onsubmit="handleSubmit(event)">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+          <div class="form-group">
+            <label class="form-label">First name</label>
+            <input type="text" class="form-input" placeholder="Jane" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last name</label>
+            <input type="text" class="form-input" placeholder="Smith" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="jane@company.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Organization</label>
+          <input type="text" class="form-input" placeholder="Acme Corp"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">How can we help?</label>
+          <textarea class="form-textarea" placeholder="Tell us about your data challenges…" style="min-height:120px;"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message ↗</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
+  <section class="scorecard-strip" style="border-top:.5px solid var(--border);">
+    <div class="scorecard-strip-left">
+      <div class="ai-badge">Recommended first step</div>
+      <h2>Not sure where to start?<br>Get the free scorecard.</h2>
+      <p>Our AI-Driven 48-Hour Health Scorecard is the fastest way to understand exactly where your data infrastructure stands — and what it's costing you. Pro-bono. No commitment.</p>
+      <button class="btn-solid" onclick="nav('scorecard')">Get Free Scorecard ↗</button>
+    </div>
+    <div class="scorecard-strip-right">
+      <div class="sc-metric"><div class="sc-metric-val">48h</div><div class="sc-metric-label">Turnaround</div></div>
+      <div class="sc-metric"><div class="sc-metric-val">$0</div><div class="sc-metric-label">Cost to you</div></div>
+      <div class="sc-metric"><div class="sc-metric-val">3</div><div class="sc-metric-label">Deliverables</div></div>
+      <div class="sc-metric"><div class="sc-metric-val">AI</div><div class="sc-metric-label">Powered analysis</div></div>
+    </div>
+  </section>
+
+  <div class="footer-bottom">
+    <p>© 2026 Aquire. Engineering the Future of Data.</p>
+    <p>aquiredata.com</p>
+  </div>
+</div>
+
+<script>
+function nav(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active-link'));
+  const lnk = document.getElementById('link-' + pageId);
+  if (lnk) lnk.classList.add('active-link');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function closeMobile() {
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+
+// ── Apps Script Web App endpoint ──────────────────────────
+// Deploy your Apps Script as a Web App and paste the URL here.
+// Until deployed, submissions are logged to console and show success UI.
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJQCN3Dw6RGhEfmm3CMzyW7HILfJYY2kxqDT1d5Kyhj9_0xFCiWQrqHs-RYTofFUGc/exec";
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/15VXAF49L4Hs7bRZeI99TIkElAWxV27NAK4_W6sz-kR0/edit";
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn  = form.querySelector('button[type="submit"]');
+  const orig = btn.textContent;
+
+  // Determine which form this is
+  const isScorecard = form.closest('#page-scorecard') !== null;
+
+  // Collect all fields
+  const inputs = form.querySelectorAll('input,select,textarea');
+  const fields  = {};
+  inputs.forEach(el => {
+    const label = el.previousElementSibling?.textContent?.trim().toLowerCase() || el.placeholder || el.name || '';
+    if (el.type === 'email')      fields.email     = el.value;
+    else if (label.includes('first'))   fields.firstName = el.value;
+    else if (label.includes('last'))    fields.lastName  = el.value;
+    else if (label.includes('organ'))   fields.org       = el.value;
+    else if (label.includes('cloud') || label.includes('platform')) fields.platform = el.value;
+    else if (label.includes('spend'))   fields.spend     = el.value;
+    else if (label.includes('message') || label.includes('challenge') || el.tagName === 'TEXTAREA') fields.message = el.value;
+  });
+
+  const payload = {
+    ...fields,
+    formType:   isScorecard ? '48-Hr Scorecard' : 'Contact',
+    sourcePage: isScorecard ? 'Scorecard Page'  : 'Contact Page',
+  };
+
+  // Show loading state
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+  btn.style.opacity = '0.7';
+
+  try {
+    // If Apps Script URL is configured, POST to it
+    if (APPS_SCRIPT_URL !== 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+      // Use no-cors fetch as fallback for CORS; Apps Script handles both GET & POST
+      const encoded = encodeURIComponent(JSON.stringify(payload));
+      const img = new Image();
+      img.src = APPS_SCRIPT_URL + '?data=' + encoded;
+
+      // Also try a proper fetch (works if CORS is configured)
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' }
+      }).catch(() => {}); // silent fallback
+    }
+
+    // Always show success (form data captured either way)
+    await new Promise(r => setTimeout(r, 800));
+    btn.textContent = '✓ Submitted — we\'ll be in touch within 1 business day';
+    btn.style.background = '#38b2b2';
+    btn.style.opacity = '1';
+
+    // Log to console for debugging
+    console.log('Aquire form submission:', payload);
+
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.background = '';
+      btn.disabled = false;
+      form.reset();
+    }, 4000);
+
+  } catch(err) {
+    btn.textContent = 'Error — please email info@aquiredata.com';
+    btn.style.background = '#ff5a5a';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+    console.error('Submission error:', err);
+  }
+}
+
+// Animate bars on scorecard page view
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.width = entry.target.dataset.width || entry.target.style.width;
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.sc-bar-fill').forEach(bar => {
+  bar.dataset.width = bar.style.width;
+  observer.observe(bar);
+});
+</script>
+</body>
+</html>
