@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Partner Portal — Aquire Data Engineering</title>
+<title>Partner Portal — Aquire</title>
 <meta name="robots" content="noindex, nofollow"/>
 <meta name="description" content="Partner with Aquire to diagnose client cloud waste, unlock frozen budgets, and earn 10–15% referral fees on every remediation project."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -795,7 +795,7 @@ button{font-family:inherit;cursor:pointer;}
 <!-- ─── FOOTER ────────────────────────────────────── -->
 <footer class="footer" role="contentinfo">
   <div class="footer-inner">
-    <p class="footer-left">© 2026 Aquire Data Engineering · <a href="https://aquiredata.com" style="color:var(--slate-muted);">aquiredata.com</a></p>
+    <p class="footer-left">© 2026 Aquire · <a href="https://aquiredata.com" style="color:var(--slate-muted);">aquiredata.com</a></p>
     <div class="footer-right">
       <a href="https://aquiredata.com/privacy">Privacy Policy</a>
       &ensp;·&ensp;
@@ -837,6 +837,8 @@ button{font-family:inherit;cursor:pointer;}
 
     const data = new FormData(form);
     const payload = {
+      formType:   'Partner Lead',
+      sourcePage: 'Partners Page',
       partnerName:  data.get('partner_name'),
       partnerFirm:  data.get('partner_firm'),
       email:        data.get('partner_email'),
