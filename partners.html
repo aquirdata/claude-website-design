@@ -815,7 +815,7 @@ button{font-family:inherit;cursor:pointer;}
   const successEl= document.getElementById('success-state');
 
   // Apps Script endpoint (same one used by the main site)
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwP7TiYEbFPI3Wux7CqckzXmuBeUMPe2scCXTFTa0IRPcq7Nl8oxIbPA6W2BLkbj-3L/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylsnDHwu9usUikX8Y3Ro872xThcV4jk-3WE4-C2W_n8qUiu1Ef1ifdY0y6xWBQjNtt/exec";
 
   function setLoading(on) {
     submitBtn.disabled = on;
@@ -850,9 +850,11 @@ button{font-family:inherit;cursor:pointer;}
     try {
       // Primary: fetch POST
       await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' },
+        mode: "no-cors", // Tells the browser to send data seamlessly without demanding explicit CORS handshake headers
+        headers: {
+          "Content-Type": "text/plain"
+        },
+        body: JSON.stringify(yourFormDataObject)
       }).catch(() => {});
 
       // Fallback: pixel GET
