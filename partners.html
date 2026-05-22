@@ -815,7 +815,7 @@ button{font-family:inherit;cursor:pointer;}
   const successEl= document.getElementById('success-state');
 
   // Apps Script endpoint (same one used by the main site)
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzJQCN3Dw6RGhEfmm3CMzyW7HILfJYY2kxqDT1d5Kyhj9_0xFCiWQrqHs-RYTofFUGc/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx7_vJbb-89-rn0F2i4D_SZ4gD3A0AXUnLPNwQAMGXwV8Dd3GL0CkGahHgleWFj0mi9/exec";
 
   function setLoading(on) {
     submitBtn.disabled = on;
@@ -837,8 +837,6 @@ button{font-family:inherit;cursor:pointer;}
 
     const data = new FormData(form);
     const payload = {
-      formType:   'Partner Lead',
-      sourcePage: 'Partners Page',
       partnerName:  data.get('partner_name'),
       partnerFirm:  data.get('partner_firm'),
       email:        data.get('partner_email'),
