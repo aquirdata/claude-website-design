@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Partner Portal — Aquire</title>
 <meta name="robots" content="noindex, nofollow"/>
-<meta name="description" content="Partner with Aquire to diagnose client cloud waste, unlock frozen budgets, and earn 10–15% referral fees on every remediation project."/>
+<meta name="description" content="Partner with Aquire to deploy an interim engineering layer that clears technical debt, recovers cloud budget, and accelerates your permanent placements."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
@@ -25,27 +25,15 @@
   --accent-hover:#1648c0;
   --border:     #e2e8f0;
   --border-mid: #cbd5e0;
-  --success-bg: #f0fdf4;
-  --success-border:#86efac;
-  --success-text:#15803d;
-  --shadow-sm:  0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
-  --shadow-md:  0 4px 16px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.04);
-  --shadow-lg:  0 20px 60px rgba(13,31,60,.10), 0 4px 16px rgba(13,31,60,.06);
+  --shadow-sm:  0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.08),0 2px 6px rgba(0,0,0,.04);
+  --shadow-lg:  0 20px 60px rgba(13,31,60,.10),0 4px 16px rgba(13,31,60,.06);
   --radius:     8px;
   --radius-lg:  14px;
 }
-
 html{scroll-behavior:smooth;font-size:16px;}
-body{
-  font-family:'DM Sans',sans-serif;
-  font-weight:300;
-  background:var(--white);
-  color:var(--slate);
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
+body{font-family:'DM Sans',sans-serif;font-weight:300;background:var(--white);color:var(--slate);line-height:1.65;-webkit-font-smoothing:antialiased;}
 a{color:inherit;text-decoration:none;}
-img{max-width:100%;display:block;}
 button{font-family:inherit;cursor:pointer;}
 
 /* ─── LAYOUT ─────────────────────────────────────── */
@@ -53,405 +41,150 @@ button{font-family:inherit;cursor:pointer;}
 .section{padding:clamp(4rem,8vw,6.5rem) 0;}
 
 /* ─── NAV ────────────────────────────────────────── */
-.nav{
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  padding:1.1rem 0;
-}
-.nav-inner{
-  max-width:1160px;margin:0 auto;
-  padding:0 clamp(1.25rem,5vw,3rem);
-  display:flex;align-items:center;justify-content:space-between;
-}
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:1.1rem 0;}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);display:flex;align-items:center;justify-content:space-between;}
 .nav-brand{display:flex;align-items:center;gap:.65rem;}
-.nav-wordmark{
-  font-family:'DM Sans',sans-serif;
-  font-size:1.125rem;font-weight:500;
-  color:var(--navy);letter-spacing:-.01em;
-}
-.nav-badge{
-  font-size:.6875rem;font-weight:500;
-  letter-spacing:.07em;text-transform:uppercase;
-  color:var(--accent);
-  background:#eff6ff;
-  border:1px solid #bfdbfe;
-  border-radius:3px;padding:2px 8px;
-}
-.nav-cta-link{
-  font-size:.8125rem;font-weight:500;
-  color:var(--accent);
-  border:1px solid var(--accent);
-  border-radius:5px;padding:7px 18px;
-  transition:background .18s,color .18s;
-}
+.nav-wordmark{font-family:'DM Sans',sans-serif;font-size:1.125rem;font-weight:500;color:var(--navy);letter-spacing:-.01em;}
+.nav-badge{font-size:.6875rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--accent);background:#eff6ff;border:1px solid #bfdbfe;border-radius:3px;padding:2px 8px;}
+.nav-cta-link{font-size:.8125rem;font-weight:500;color:var(--accent);border:1px solid var(--accent);border-radius:5px;padding:7px 18px;transition:background .18s,color .18s;}
 .nav-cta-link:hover{background:var(--accent);color:var(--white);}
 
 /* ─── HERO ───────────────────────────────────────── */
-.hero{
-  background:var(--off-white);
-  border-bottom:1px solid var(--border);
-  padding:clamp(4rem,9vw,7rem) 0 clamp(3.5rem,8vw,6rem);
-}
-.hero-inner{
-  max-width:1160px;margin:0 auto;
-  padding:0 clamp(1.25rem,5vw,3rem);
-  display:grid;grid-template-columns:1fr auto;
-  gap:4rem;align-items:center;
-}
-.hero-eyebrow{
-  font-size:.75rem;font-weight:500;
-  letter-spacing:.13em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:1.25rem;
-  display:flex;align-items:center;gap:10px;
-}
-.hero-eyebrow::before{
-  content:'';display:inline-block;
-  width:24px;height:1px;background:var(--accent);
-}
-.hero h1{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(2.25rem,4.5vw,3.25rem);
-  line-height:1.12;letter-spacing:-.02em;
-  color:var(--navy);margin-bottom:1.5rem;
-  max-width:640px;
-}
+.hero{background:var(--off-white);border-bottom:1px solid var(--border);padding:clamp(4rem,9vw,7rem) 0 clamp(3.5rem,8vw,6rem);}
+.hero-inner{max-width:1160px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);display:grid;grid-template-columns:1fr auto;gap:4rem;align-items:center;}
+.hero-eyebrow{font-size:.75rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem;display:flex;align-items:center;gap:10px;}
+.hero-eyebrow::before{content:'';display:inline-block;width:24px;height:1px;background:var(--accent);}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.1rem,4.5vw,3.1rem);line-height:1.12;letter-spacing:-.02em;color:var(--navy);margin-bottom:1.25rem;max-width:620px;}
 .hero h1 em{font-style:italic;color:var(--navy-mid);}
-.hero-sub{
-  font-size:1.0625rem;color:var(--slate);
-  line-height:1.75;max-width:520px;margin-bottom:2.25rem;
+.hero-sub{font-size:1.0625rem;color:var(--slate);line-height:1.75;max-width:540px;margin-bottom:1.5rem;}
+
+/* Security banner */
+.security-banner{
+  display:flex;align-items:flex-start;gap:.875rem;
+  background:#fff;
+  border:1px solid #bfdbfe;
+  border-left:3px solid var(--accent);
+  border-radius:6px;
+  padding:1rem 1.125rem;
+  margin-bottom:2rem;
+  max-width:600px;
 }
-.btn-primary{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:.875rem;font-weight:500;
-  letter-spacing:.03em;
-  background:var(--navy);color:var(--white);
-  border:none;border-radius:6px;
-  padding:13px 28px;
-  box-shadow:0 2px 8px rgba(13,31,60,.25);
-  transition:background .2s,transform .15s,box-shadow .2s;
+.security-banner-icon{flex-shrink:0;margin-top:1px;}
+.security-banner-body{font-size:.875rem;color:var(--slate);line-height:1.65;}
+.security-banner-body strong{color:var(--navy);font-weight:500;}
+.security-banner-label{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:.6875rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:.35rem;
 }
-.btn-primary:hover{
-  background:var(--navy-light);
-  transform:translateY(-1px);
-  box-shadow:0 6px 20px rgba(13,31,60,.3);
-}
+
+.btn-primary{display:inline-flex;align-items:center;gap:8px;font-size:.875rem;font-weight:500;letter-spacing:.03em;background:var(--navy);color:var(--white);border:none;border-radius:6px;padding:13px 28px;box-shadow:0 2px 8px rgba(13,31,60,.25);transition:background .2s,transform .15s,box-shadow .2s;}
+.btn-primary:hover{background:var(--navy-light);transform:translateY(-1px);box-shadow:0 6px 20px rgba(13,31,60,.3);}
 .btn-primary svg{flex-shrink:0;transition:transform .2s;}
 .btn-primary:hover svg{transform:translateY(2px);}
 
 /* Hero graphic */
 .hero-graphic{flex-shrink:0;}
-.scorecard-visual{
-  width:260px;background:var(--white);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  padding:1.5rem;
-  box-shadow:var(--shadow-lg);
-  position:relative;
-}
-.scorecard-visual::before{
-  content:'48-HR SCORECARD';
-  position:absolute;top:-11px;left:50%;transform:translateX(-50%);
-  font-size:.6rem;font-weight:500;letter-spacing:.1em;
-  color:var(--accent);background:var(--white);
-  border:1px solid #bfdbfe;border-radius:20px;
-  padding:2px 12px;white-space:nowrap;
-}
-.scorecard-title{
-  font-size:.75rem;font-weight:500;color:var(--navy);
-  text-transform:uppercase;letter-spacing:.08em;
-  margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:.75rem;
-}
+.scorecard-visual{width:260px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;box-shadow:var(--shadow-lg);position:relative;}
+.scorecard-visual::before{content:'48-HR SCORECARD';position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:.6rem;font-weight:500;letter-spacing:.1em;color:var(--accent);background:var(--white);border:1px solid #bfdbfe;border-radius:20px;padding:2px 12px;white-space:nowrap;}
+.scorecard-title{font-size:.75rem;font-weight:500;color:var(--navy);text-transform:uppercase;letter-spacing:.08em;margin-bottom:1.25rem;border-bottom:1px solid var(--border);padding-bottom:.75rem;}
 .sc-bar-row{margin-bottom:1rem;}
-.sc-bar-label{
-  display:flex;justify-content:space-between;
-  font-size:.6875rem;color:var(--slate-muted);margin-bottom:5px;
-  text-transform:uppercase;letter-spacing:.05em;
-}
+.sc-bar-label{display:flex;justify-content:space-between;font-size:.6875rem;color:var(--slate-muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.05em;}
 .sc-bar-label span:last-child{font-weight:500;color:var(--slate);}
-.sc-track{
-  height:5px;background:#edf2f7;border-radius:3px;overflow:hidden;
-}
-.sc-fill{
-  height:100%;border-radius:3px;
-  background:linear-gradient(90deg,var(--navy),var(--accent));
-}
+.sc-track{height:5px;background:#edf2f7;border-radius:3px;overflow:hidden;}
+.sc-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--navy),var(--accent));}
 .sc-fill.warn{background:linear-gradient(90deg,#d97706,#f59e0b);}
 .sc-fill.danger{background:linear-gradient(90deg,#dc2626,#f87171);}
-.sc-score{
-  display:flex;align-items:center;justify-content:space-between;
-  margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border);
-}
-.sc-score-num{
-  font-family:'Playfair Display',serif;
-  font-size:2.5rem;font-weight:700;letter-spacing:-.04em;
-  color:var(--navy);line-height:1;
-}
+.sc-score{display:flex;align-items:center;justify-content:space-between;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--border);}
+.sc-score-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:700;letter-spacing:-.04em;color:var(--navy);line-height:1;}
 .sc-score-label{font-size:.625rem;color:var(--slate-muted);text-transform:uppercase;letter-spacing:.06em;}
-.sc-savings{
-  text-align:right;
-}
-.sc-savings-num{
-  font-size:.9375rem;font-weight:500;color:#15803d;
-}
+.sc-savings{text-align:right;}
+.sc-savings-num{font-size:.9375rem;font-weight:500;color:#15803d;}
 .sc-savings-label{font-size:.625rem;color:var(--slate-muted);text-transform:uppercase;letter-spacing:.06em;}
 
-/* ─── HOW IT WORKS ───────────────────────────────── */
+/* ─── SECTION TYPOGRAPHY ─────────────────────────── */
+.section-label{font-size:.75rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem;display:flex;align-items:center;gap:10px;}
+.section-label::before{content:'';display:inline-block;width:20px;height:1px;background:var(--accent);}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.875rem,3.5vw,2.5rem);line-height:1.15;letter-spacing:-.02em;color:var(--navy);margin-bottom:1rem;}
+.section-sub{font-size:1rem;color:var(--slate);max-width:520px;line-height:1.75;}
+
+/* ─── STEPS ──────────────────────────────────────── */
 .how{background:var(--white);}
-.section-label{
-  font-size:.75rem;font-weight:500;
-  letter-spacing:.13em;text-transform:uppercase;
-  color:var(--accent);margin-bottom:.9rem;
-  display:flex;align-items:center;gap:10px;
-}
-.section-label::before{
-  content:'';display:inline-block;
-  width:20px;height:1px;background:var(--accent);
-}
-.section-title{
-  font-family:'Playfair Display',serif;
-  font-size:clamp(1.875rem,3.5vw,2.5rem);
-  line-height:1.15;letter-spacing:-.02em;
-  color:var(--navy);margin-bottom:1rem;
-}
-.section-sub{
-  font-size:1rem;color:var(--slate);max-width:520px;line-height:1.75;
-}
-.steps-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:2px;margin-top:3.5rem;
-  border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;
-}
-.step{
-  padding:2.5rem 2rem;background:var(--white);
-  border-right:1px solid var(--border);
-  position:relative;
-  transition:background .2s;
-}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:3.5rem;border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;}
+.step{padding:2.5rem 2rem;background:var(--white);border-right:1px solid var(--border);position:relative;transition:background .2s;}
 .step:last-child{border-right:none;}
 .step:hover{background:var(--off-white);}
-.step-num{
-  font-family:'Playfair Display',serif;
-  font-size:3rem;font-weight:700;line-height:1;
-  color:#e2e8f0;margin-bottom:1.25rem;
-  letter-spacing:-.04em;
-}
-.step-icon{
-  width:40px;height:40px;border-radius:8px;
-  background:var(--navy);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:1.25rem;
-  flex-shrink:0;
-}
-.step h3{
-  font-size:1.0625rem;font-weight:500;
-  color:var(--navy);margin-bottom:.75rem;
-  line-height:1.3;
-}
+.step-num{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;line-height:1;color:#e2e8f0;margin-bottom:1.25rem;letter-spacing:-.04em;}
+.step-icon{width:40px;height:40px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;flex-shrink:0;}
+.step h3{font-size:1.0625rem;font-weight:500;color:var(--navy);margin-bottom:.75rem;line-height:1.3;}
 .step h3 strong{color:var(--navy);font-weight:600;}
 .step p{font-size:.9375rem;color:var(--slate);line-height:1.7;}
-.step-connector{
-  position:absolute;top:50%;right:-1px;
-  transform:translateY(-50%);
-  width:20px;height:20px;
-  background:var(--white);border:1px solid var(--border);
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  z-index:1;
-}
+.step-connector{position:absolute;top:50%;right:-1px;transform:translateY(-50%);width:20px;height:20px;background:var(--white);border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:1;}
 .step:last-child .step-connector{display:none;}
-.step-connector svg{color:var(--slate-muted);}
 
-/* ─── FORM ───────────────────────────────────────── */
+/* ─── FORM SECTION ───────────────────────────────── */
 .form-section{background:var(--off-white);border-top:1px solid var(--border);}
-.form-layout{
-  display:grid;grid-template-columns:1fr 1.1fr;
-  gap:5rem;align-items:start;
-}
+.form-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:5rem;align-items:start;}
 .form-intro{position:sticky;top:5rem;}
-.form-intro .section-title{margin-bottom:1.25rem;}
-.form-intro p{
-  font-size:.9375rem;color:var(--slate);line-height:1.75;
-  margin-bottom:1.5rem;
-}
-.fee-badge{
-  display:inline-flex;align-items:center;gap:.5rem;
-  background:var(--navy);color:var(--white);
-  border-radius:6px;padding:10px 18px;
-  font-size:.8125rem;font-weight:500;
-  margin-bottom:2rem;
-}
-.fee-badge span.fee-num{
-  font-family:'Playfair Display',serif;
-  font-size:1.5rem;font-weight:700;
-  line-height:1;
-}
+.form-intro p{font-size:.9375rem;color:var(--slate);line-height:1.75;margin-bottom:1.5rem;}
+.fee-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--navy);color:var(--white);border-radius:6px;padding:10px 18px;font-size:.8125rem;font-weight:500;margin-bottom:2rem;}
+.fee-badge span.fee-num{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;line-height:1;}
 .promise-list{list-style:none;display:flex;flex-direction:column;gap:.75rem;}
-.promise-list li{
-  display:flex;align-items:flex-start;gap:.75rem;
-  font-size:.875rem;color:var(--slate);line-height:1.6;
-}
-.promise-list li::before{
-  content:'';display:inline-block;flex-shrink:0;
-  width:5px;height:5px;border-radius:50%;
-  background:var(--accent);margin-top:.5rem;
-}
+.promise-list li{display:flex;align-items:flex-start;gap:.75rem;font-size:.875rem;color:var(--slate);line-height:1.6;}
+.promise-list li::before{content:'';display:inline-block;flex-shrink:0;width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:.5rem;}
 
 /* Form card */
-.form-card{
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  padding:clamp(1.75rem,4vw,2.5rem);
-  box-shadow:var(--shadow-lg);
-}
-.form-card-header{
-  padding-bottom:1.5rem;margin-bottom:1.75rem;
-  border-bottom:1px solid var(--border);
-}
-.form-card-header h3{
-  font-family:'Playfair Display',serif;
-  font-size:1.375rem;color:var(--navy);margin-bottom:.35rem;
-}
+.form-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(1.75rem,4vw,2.5rem);box-shadow:var(--shadow-lg);}
+.form-card-header{padding-bottom:1.5rem;margin-bottom:1.75rem;border-bottom:1px solid var(--border);}
+.form-card-header h3{font-family:'Playfair Display',serif;font-size:1.375rem;color:var(--navy);margin-bottom:.35rem;}
 .form-card-header p{font-size:.875rem;color:var(--slate-light);}
-
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
 .form-group{margin-bottom:1.25rem;}
-.form-group:last-of-type{margin-bottom:0;}
-.form-label{
-  display:block;font-size:.75rem;font-weight:500;
-  letter-spacing:.06em;text-transform:uppercase;
-  color:var(--slate);margin-bottom:.5rem;
-}
+.form-label{display:block;font-size:.75rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--slate);margin-bottom:.5rem;}
 .form-label .req{color:var(--accent);}
-.form-input,.form-select,.form-textarea{
-  width:100%;
-  font-family:'DM Sans',sans-serif;
-  font-size:.9375rem;font-weight:300;
-  color:var(--navy);
-  background:var(--white);
-  border:1.5px solid var(--border-mid);
-  border-radius:6px;
-  padding:10px 14px;
-  outline:none;
-  transition:border-color .18s,box-shadow .18s;
-  appearance:none;
-  -webkit-appearance:none;
-}
+.form-input,.form-select,.form-textarea{width:100%;font-family:'DM Sans',sans-serif;font-size:.9375rem;font-weight:300;color:var(--navy);background:var(--white);border:1.5px solid var(--border-mid);border-radius:6px;padding:10px 14px;outline:none;transition:border-color .18s,box-shadow .18s;appearance:none;-webkit-appearance:none;}
 .form-input::placeholder,.form-textarea::placeholder{color:var(--slate-muted);}
-.form-input:focus,.form-select:focus,.form-textarea:focus{
-  border-color:var(--accent);
-  box-shadow:0 0 0 3px rgba(26,86,219,.08);
-}
-.form-input:invalid:not(:placeholder-shown),.form-select:invalid:not([value=""]):not(:placeholder-shown){
-  border-color:#fca5a5;
-}
-.form-select{
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%234a5568' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 12px center;
-  padding-right:36px;cursor:pointer;
-}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,86,219,.08);}
+.form-select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' viewBox='0 0 24 24'%3E%3Cpath stroke='%234a5568' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px;cursor:pointer;}
 .form-textarea{resize:vertical;min-height:100px;line-height:1.6;}
 
-.btn-submit{
-  width:100%;margin-top:1.5rem;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-size:.875rem;font-weight:500;letter-spacing:.03em;
-  color:var(--white);background:var(--accent);
-  border:none;border-radius:6px;
-  padding:14px 24px;
-  box-shadow:0 2px 10px rgba(26,86,219,.3);
-  transition:background .18s,transform .15s,box-shadow .2s;
-}
-.btn-submit:hover:not(:disabled){
-  background:var(--accent-hover);
-  transform:translateY(-1px);
-  box-shadow:0 6px 20px rgba(26,86,219,.35);
-}
+/* Email validation hint */
+.field-hint{font-size:.75rem;color:var(--slate-muted);margin-top:.35rem;}
+.form-input.invalid{border-color:#fca5a5;}
+.form-input.invalid + .field-hint{color:#dc2626;}
+
+.btn-submit{width:100%;margin-top:1.5rem;display:flex;align-items:center;justify-content:center;gap:8px;font-size:.875rem;font-weight:500;letter-spacing:.03em;color:var(--white);background:var(--accent);border:none;border-radius:6px;padding:14px 24px;box-shadow:0 2px 10px rgba(26,86,219,.3);transition:background .18s,transform .15s,box-shadow .2s;}
+.btn-submit:hover:not(:disabled){background:var(--accent-hover);transform:translateY(-1px);box-shadow:0 6px 20px rgba(26,86,219,.35);}
 .btn-submit:disabled{opacity:.65;cursor:not-allowed;}
-.btn-submit .spinner{
-  width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
-  border-top-color:#fff;border-radius:50%;
-  animation:spin .7s linear infinite;
-}
+.btn-submit .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.form-footer-note{
-  text-align:center;margin-top:.875rem;
-  font-size:.75rem;color:var(--slate-muted);
-}
+.form-footer-note{text-align:center;margin-top:.875rem;font-size:.75rem;color:var(--slate-muted);}
 
 /* Success state */
-.success-state{
-  display:none;
-  padding:2rem;text-align:center;
-  background:var(--success-bg);
-  border:1px solid var(--success-border);
-  border-radius:var(--radius);
-}
+.success-state{display:none;padding:2rem;text-align:center;background:#f0fdf4;border:1px solid #86efac;border-radius:var(--radius);}
 .success-state.visible{display:block;}
-.success-icon{
-  width:48px;height:48px;border-radius:50%;
-  background:#dcfce7;border:1px solid var(--success-border);
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 1rem;
-}
-.success-title{
-  font-family:'Playfair Display',serif;
-  font-size:1.25rem;color:#15803d;margin-bottom:.75rem;
-}
+.success-icon{width:48px;height:48px;border-radius:50%;background:#dcfce7;border:1px solid #86efac;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;}
+.success-title{font-family:'Playfair Display',serif;font-size:1.25rem;color:#15803d;margin-bottom:.75rem;}
 .success-body{font-size:.9rem;color:#166534;line-height:1.65;}
 
-/* ─── TRUST ───────────────────────────────────────── */
+/* ─── TRUST ──────────────────────────────────────── */
 .trust{background:var(--navy);}
 .trust .section-label{color:#7dd3fc;}
 .trust .section-label::before{background:#7dd3fc;}
 .trust .section-title{color:var(--white);}
 .trust .section-sub{color:#94a3b8;}
-.trust-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);
-  gap:1.5px;margin-top:3rem;
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:var(--radius-lg);overflow:hidden;
-}
-.trust-item{
-  background:rgba(13,31,60,.8);
-  padding:2.25rem 2rem;
-  border-right:1px solid rgba(255,255,255,.07);
-}
+.trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;margin-top:3rem;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius-lg);overflow:hidden;}
+.trust-item{background:rgba(13,31,60,.8);padding:2.25rem 2rem;border-right:1px solid rgba(255,255,255,.07);}
 .trust-item:last-child{border-right:none;}
-.trust-icon-wrap{
-  width:44px;height:44px;border-radius:8px;
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.1);
-  display:flex;align-items:center;justify-content:center;
-  margin-bottom:1.25rem;
-}
-.trust-item h4{
-  font-size:1rem;font-weight:500;
-  color:var(--white);margin-bottom:.75rem;
-  line-height:1.3;
-}
+.trust-icon-wrap{width:44px;height:44px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;margin-bottom:1.25rem;}
+.trust-item h4{font-size:1rem;font-weight:500;color:var(--white);margin-bottom:.75rem;line-height:1.3;}
 .trust-item p{font-size:.875rem;color:#94a3b8;line-height:1.7;}
 
 /* ─── FOOTER ─────────────────────────────────────── */
-.footer{
-  border-top:1px solid var(--border);
-  padding:2rem 0;background:var(--white);
-}
-.footer-inner{
-  max-width:1160px;margin:0 auto;
-  padding:0 clamp(1.25rem,5vw,3rem);
-  display:flex;align-items:center;justify-content:space-between;
-  flex-wrap:wrap;gap:1rem;
-}
+.footer{border-top:1px solid var(--border);padding:2rem 0;background:var(--white);}
+.footer-inner{max-width:1160px;margin:0 auto;padding:0 clamp(1.25rem,5vw,3rem);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
 .footer-left{font-size:.8125rem;color:var(--slate-muted);}
-.footer-right a{
-  font-size:.8125rem;color:var(--slate-muted);
-  transition:color .18s;
-}
+.footer-right a{font-size:.8125rem;color:var(--slate-muted);transition:color .18s;}
 .footer-right a:hover{color:var(--navy);}
 
 /* ─── RESPONSIVE ─────────────────────────────────── */
@@ -471,19 +204,15 @@ button{font-family:inherit;cursor:pointer;}
   .trust-item:last-child{border-bottom:none;}
   .form-row{grid-template-columns:1fr;}
 }
-@media(max-width:480px){
-  .nav-badge{display:none;}
-}
+@media(max-width:480px){.nav-badge{display:none;}}
 
 /* ─── ANIMATIONS ─────────────────────────────────── */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(18px);}
-  to{opacity:1;transform:translateY(0);}
-}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
 .hero-eyebrow{animation:fadeUp .5s ease both;}
 .hero h1{animation:fadeUp .55s .08s ease both;}
 .hero-sub{animation:fadeUp .55s .16s ease both;}
-.hero .btn-primary{animation:fadeUp .55s .24s ease both;}
+.security-banner{animation:fadeUp .55s .22s ease both;}
+.hero .btn-primary{animation:fadeUp .55s .3s ease both;}
 </style>
 </head>
 <body>
@@ -522,13 +251,30 @@ button{font-family:inherit;cursor:pointer;}
       <p class="hero-eyebrow">Strategic Alliance Program</p>
       <h1 id="hero-heading">
         Monetize Paused Roles &amp;<br>
-        Deliver <em>Instant Cost-Savings</em><br>
-        to Your Clients
+        <em>Stabilize Client</em><br>
+        Environments
       </h1>
       <p class="hero-sub">
-        Partner with Aquire to diagnose client cloud waste, clear engineering bottlenecks,
-        and unlock frozen recruitment budgets — while earning a 10–15% referral fee on every remediation project.
+        Partner with Aquire to deploy an interim engineering layer that clears technical debt,
+        recovers cloud budget, and accelerates your permanent placements.
       </p>
+
+      <!-- Security Banner -->
+      <div class="security-banner" role="note" aria-label="Aquire security guarantee">
+        <div class="security-banner-icon" aria-hidden="true">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24">
+            <path stroke="#1a56db" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <path stroke="#1a56db" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="security-banner-body">
+          <div class="security-banner-label">
+            🔒 The Aquire Security Guarantee
+          </div>
+          Powered by a strict, non-invasive read-only mandate. We evaluate architectural metadata configurations only. We <strong>never</strong> write, move, modify, or store a single byte of core client data or sensitive production pipelines. Everything remains 100% within the client's existing perimeter.
+        </div>
+      </div>
+
       <a href="#submit-lead" class="btn-primary">
         Submit a Partner Lead
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" aria-hidden="true">
@@ -536,6 +282,7 @@ button{font-family:inherit;cursor:pointer;}
         </svg>
       </a>
     </div>
+
     <div class="hero-graphic" aria-hidden="true">
       <div class="scorecard-visual">
         <div class="scorecard-title">Data Health Scorecard</div>
@@ -573,9 +320,9 @@ button{font-family:inherit;cursor:pointer;}
 <!-- ─── HOW IT WORKS ──────────────────────────────── -->
 <section class="how section" aria-labelledby="how-heading">
   <div class="container">
-    <p class="section-label">The Alliance Workflow</p>
-    <h2 class="section-title" id="how-heading">How the Alliance Works</h2>
-    <p class="section-sub">A three-step process that converts stalled client conversations into active revenue for both sides.</p>
+    <p class="section-label">The Workflow</p>
+    <h2 class="section-title" id="how-heading">The Symbiotic Solutions Framework</h2>
+    <p class="section-sub">Three steps that convert stalled client environments into active revenue — for both sides of the partnership.</p>
 
     <div class="steps-grid" role="list">
 
@@ -586,8 +333,8 @@ button{font-family:inherit;cursor:pointer;}
             <path stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
           </svg>
         </div>
-        <h3><strong>Identify the Leak.</strong></h3>
-        <p>A recruiter or fractional advisor encounters a client struggling with high cloud bills on AWS, Snowflake, or Databricks — or a frozen technical headcount that signals deeper infrastructure waste.</p>
+        <h3><strong>Identify Infrastructure Friction.</strong></h3>
+        <p>A client has skyrocketing cloud bills on AWS, Snowflake, or Databricks, broken pipelines, or a frozen data headcount that signals deeper structural problems beneath the surface.</p>
         <div class="step-connector" aria-hidden="true">
           <svg width="10" height="10" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/>
@@ -602,8 +349,8 @@ button{font-family:inherit;cursor:pointer;}
             <path stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6M3 21h18M3 10l9-7 9 7"/>
           </svg>
         </div>
-        <h3><strong>Deploy the Audit.</strong></h3>
-        <p>Submit the client via this portal. Aquire runs a complimentary, read-only 48-Hour Data Health Scorecard to locate up to 20% in hidden infrastructure waste across cloud spend, schema integrity, and PII exposure.</p>
+        <h3><strong>Deploy the Read-Only Audit.</strong></h3>
+        <p>You register the client via this portal. Aquire runs a complimentary, non-invasive 48-Hour Data Health Scorecard to pinpoint up to 20% in infrastructure cost waste — completely free of legal or security friction.</p>
         <div class="step-connector" aria-hidden="true">
           <svg width="10" height="10" fill="none" viewBox="0 0 24 24">
             <path stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/>
@@ -618,8 +365,8 @@ button{font-family:inherit;cursor:pointer;}
             <path stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8v1m0 9v1M5.2 5.2l1.4 1.4M17.4 17.4l1.4 1.4M3 12h1m17 0h-1M5.2 18.8l1.4-1.4M17.4 6.6l1.4-1.4"/>
           </svg>
         </div>
-        <h3><strong>Unlock Budget &amp; Revenue.</strong></h3>
-        <p>Aquire executes the remediation project. You earn a 10–15% referral fee, and the client "finds" the capital to open new full-time recruitment headcounts — reactivating your pipeline at the source.</p>
+        <h3><strong>Stabilize &amp; Place Talent.</strong></h3>
+        <p>Aquire steps in as an Interim Engineering Layer to clean up backend complexity and optimize infrastructure. You earn a 10–15% referral fee, and the client finds the annualized EBITDA required to confidently hire permanent, top 1% data talent from your firm.</p>
       </article>
 
     </div>
@@ -631,11 +378,10 @@ button{font-family:inherit;cursor:pointer;}
   <div class="container">
     <div class="form-layout">
 
-      <!-- Intro column -->
       <div class="form-intro">
         <p class="section-label">Lead Submission Portal</p>
         <h2 class="section-title" id="form-heading">Co-Branded Scorecard Request</h2>
-        <p>Submit a qualified client and we'll run a complimentary 48-hour diagnostic. You'll receive a co-branded Data Health Scorecard to present alongside your recruitment pitch.</p>
+        <p>Submit a qualified client and we'll run a complimentary 48-hour diagnostic. You'll receive a co-branded Data Health Scorecard to present directly alongside your recruitment pitch.</p>
 
         <div class="fee-badge" aria-label="10 to 15 percent referral fee on every closed project">
           <span class="fee-num">10–15%</span>
@@ -643,15 +389,15 @@ button{font-family:inherit;cursor:pointer;}
         </div>
 
         <ul class="promise-list" role="list">
-          <li>Results delivered in 48 hours, every time</li>
-          <li>Co-branded report delivered directly to you</li>
-          <li>Strict non-circumvention SLA protects your client relationship</li>
-          <li>Read-only protocol — we never touch production data</li>
-          <li>Aquire never competes for staffing or recruitment mandates</li>
+          <li>Scorecard delivered in 48 hours, every time</li>
+          <li>Co-branded report presented directly under your firm's name</li>
+          <li>Binding SLA non-circumvention clause protects your client relationship</li>
+          <li>Read-only metadata protocol — we never touch production data</li>
+          <li>Aquire never competes for staffing or permanent placement mandates</li>
+          <li>US-anchored architects interface with your client's security teams</li>
         </ul>
       </div>
 
-      <!-- Form column -->
       <div>
         <div class="form-card" role="region" aria-label="Partner lead submission form">
           <div class="form-card-header">
@@ -659,7 +405,6 @@ button{font-family:inherit;cursor:pointer;}
             <p>All fields marked <abbr title="required">*</abbr> are required. We respond within 2 business hours.</p>
           </div>
 
-          <!-- Default / success states -->
           <div id="success-state" class="success-state" role="alert" aria-live="polite">
             <div class="success-icon" aria-hidden="true">
               <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -667,61 +412,56 @@ button{font-family:inherit;cursor:pointer;}
               </svg>
             </div>
             <h4 class="success-title">Lead Successfully Logged.</h4>
-            <p class="success-body">Marvin Edmond or an Aquire Solutions Architect will reach out to you within 2 business hours to coordinate the co-branded scorecard pitch. Keep an eye on your inbox.</p>
+            <p class="success-body">Marvin Edmond or an Aquire Solutions Architect will reach out to your corporate email within 2 business hours to coordinate the co-branded scorecard pitch.</p>
           </div>
 
           <form id="partner-form" novalidate aria-label="Partner lead submission">
 
             <div class="form-row">
               <div class="form-group">
-                <label class="form-label" for="partner-name">Your Name <span class="req" aria-hidden="true">*</span></label>
-                <input
-                  class="form-input" type="text" id="partner-name" name="partner_name"
-                  placeholder="Jane Smith" required autocomplete="name"
-                  aria-required="true"/>
+                <label class="form-label" for="partner-name">Partner Contact Name <span class="req" aria-hidden="true">*</span></label>
+                <input class="form-input" type="text" id="partner-name" name="partner_name"
+                  placeholder="Jane Smith" required autocomplete="name" aria-required="true"/>
               </div>
               <div class="form-group">
-                <label class="form-label" for="partner-firm">Your Firm / Agency <span class="req" aria-hidden="true">*</span></label>
-                <input
-                  class="form-input" type="text" id="partner-firm" name="partner_firm"
-                  placeholder="Acme Talent Group" required autocomplete="organization"
-                  aria-required="true"/>
+                <label class="form-label" for="partner-firm">Firm / Agency Name <span class="req" aria-hidden="true">*</span></label>
+                <input class="form-input" type="text" id="partner-firm" name="partner_firm"
+                  placeholder="Acme Talent Group" required autocomplete="organization" aria-required="true"/>
               </div>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="partner-email">Your Email Address <span class="req" aria-hidden="true">*</span></label>
-              <input
-                class="form-input" type="email" id="partner-email" name="partner_email"
+              <label class="form-label" for="partner-email">Partner Corporate Email <span class="req" aria-hidden="true">*</span></label>
+              <input class="form-input" type="email" id="partner-email" name="partner_email"
                 placeholder="jane@acmetalent.com" required autocomplete="email"
-                pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-                aria-required="true"/>
+                aria-required="true" aria-describedby="email-hint"/>
+              <p class="field-hint" id="email-hint">Please use your corporate email address (not Gmail, Yahoo, etc.)</p>
             </div>
 
             <div class="form-group">
               <label class="form-label" for="client-company">Client Company Name <span class="req" aria-hidden="true">*</span></label>
-              <input
-                class="form-input" type="text" id="client-company" name="client_company"
-                placeholder="Client Corp Inc." required
-                aria-required="true"/>
+              <input class="form-input" type="text" id="client-company" name="client_company"
+                placeholder="Client Corp Inc." required aria-required="true"/>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="pain-point">Primary Infrastructure Pain Point <span class="req" aria-hidden="true">*</span></label>
-              <select class="form-select" id="pain-point" name="pain_point" required aria-required="true">
+              <label class="form-label" for="bottleneck">Current Structural Bottleneck <span class="req" aria-hidden="true">*</span></label>
+              <select class="form-select" id="bottleneck" name="bottleneck" required aria-required="true">
                 <option value="" disabled selected>Select the client's primary challenge…</option>
-                <option value="high-cloud-bill">High Cloud / Snowflake Bill</option>
-                <option value="fractured-pipelines">Fractured Data Pipelines</option>
-                <option value="frozen-headcount">Frozen Headcount / Stop-Gap Needed</option>
-                <option value="compliance-pii">Compliance / Unmasked PII</option>
+                <option value="high-cloud-bleed">High Cloud / Snowflake Bleed</option>
+                <option value="pipeline-degradation">Pipeline Degradation &amp; Structural Debt</option>
+                <option value="frozen-headcount">Frozen Headcount / Interim Stop-Gap Needed</option>
+                <option value="compliance-pii">Compliance / Unmasked Data Silos</option>
               </select>
             </div>
 
             <div class="form-group">
-              <label class="form-label" for="context">Additional Context <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--slate-muted);">(optional)</span></label>
-              <textarea
-                class="form-textarea" id="context" name="context"
-                placeholder="Any relevant background on the client's stack, monthly spend, urgency, or existing relationship…"
+              <label class="form-label" for="context">
+                Context / Project Scope Notes
+                <span style="font-weight:300;text-transform:none;letter-spacing:0;color:var(--slate-muted);">(optional)</span>
+              </label>
+              <textarea class="form-textarea" id="context" name="context"
+                placeholder="Any relevant background on the client's stack, monthly cloud spend, urgency, team size, or existing relationship…"
                 aria-multiline="true"></textarea>
             </div>
 
@@ -752,7 +492,7 @@ button{font-family:inherit;cursor:pointer;}
   <div class="container">
     <p class="section-label">Rules of Engagement</p>
     <h2 class="section-title" id="trust-heading">Enterprise-Grade Rules of Engagement</h2>
-    <p class="section-sub" style="color:#94a3b8;">Built to protect your client relationships, your data, and your timeline.</p>
+    <p class="section-sub" style="color:#94a3b8;">Engineered to protect your clients, your data, and your competitive position.</p>
 
     <div class="trust-grid" role="list">
 
@@ -762,18 +502,8 @@ button{font-family:inherit;cursor:pointer;}
             <path stroke="#7dd3fc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 0 0 1.946-.806 3.42 3.42 0 0 1 4.438 0 3.42 3.42 0 0 0 1.946.806 3.42 3.42 0 0 1 3.138 3.138 3.42 3.42 0 0 0 .806 1.946 3.42 3.42 0 0 1 0 4.438 3.42 3.42 0 0 0-.806 1.946 3.42 3.42 0 0 1-3.138 3.138 3.42 3.42 0 0 0-1.946.806 3.42 3.42 0 0 1-4.438 0 3.42 3.42 0 0 0-1.946-.806 3.42 3.42 0 0 1-3.138-3.138 3.42 3.42 0 0 0-.806-1.946 3.42 3.42 0 0 1 0-4.438 3.42 3.42 0 0 0 .806-1.946 3.42 3.42 0 0 1 3.138-3.138z"/>
           </svg>
         </div>
-        <h4>Strict Non-Compete</h4>
-        <p>Aquire focuses exclusively on project-based data engineering architecture and cost recovery. We do not offer staffing or recruitment services. Your client relationships are completely protected by our formal SLA non-circumvention policy.</p>
-      </article>
-
-      <article class="trust-item" role="listitem">
-        <div class="trust-icon-wrap" aria-hidden="true">
-          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
-            <path stroke="#7dd3fc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-        </div>
-        <h4>Zero-Trust Security</h4>
-        <p>Our 48-Hour Scorecard utilizes a read-only metadata protocol. We never copy, move, or store sensitive underlying client data, ensuring absolute enterprise compliance — fully auditable at every step.</p>
+        <h4>Zero Staffing Overlap</h4>
+        <p>Aquire focuses exclusively on project-based data engineering architecture, cloud cost recovery, and pipeline modernizations. We do not provide permanent staffing or recruitment services. Your client relationships are completely protected by our binding SLA non-circumvention clauses.</p>
       </article>
 
       <article class="trust-item" role="listitem">
@@ -782,8 +512,18 @@ button{font-family:inherit;cursor:pointer;}
             <path stroke="#7dd3fc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
           </svg>
         </div>
-        <h4>High-Velocity Execution</h4>
-        <p>While traditional consultancies take weeks to scope and evaluate, our AI-driven optimization pipeline delivers concrete architectural insights and engineering remediation roadmaps in days, not months.</p>
+        <h4>70/30 High-Velocity Delivery</h4>
+        <p>We pair elite US-based data architects to anchor client strategy and interface directly with enterprise security teams, backed by an optimized global engineering squad. This structural efficiency keeps project remediation costs hyper-competitive, passing maximum budget savings back to the client.</p>
+      </article>
+
+      <article class="trust-item" role="listitem">
+        <div class="trust-icon-wrap" aria-hidden="true">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24">
+            <path stroke="#7dd3fc" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/>
+          </svg>
+        </div>
+        <h4>Flawless Onboarding</h4>
+        <p>Because our engineering squad acts as an interim layer that clears architectural chaos, your permanent candidates step into a pristine, high-performing, and structurally sound environment where they can succeed long-term — strengthening your placement reputation.</p>
       </article>
 
     </div>
@@ -807,15 +547,34 @@ button{font-family:inherit;cursor:pointer;}
 <!-- ─── FORM SCRIPT ───────────────────────────────── -->
 <script>
 (function () {
-  const form     = document.getElementById('partner-form');
-  const submitBtn= document.getElementById('submit-btn');
-  const btnText  = document.getElementById('btn-text');
-  const btnSpinner=document.getElementById('btn-spinner');
-  const btnIcon  = document.getElementById('btn-icon');
-  const successEl= document.getElementById('success-state');
+  const form      = document.getElementById('partner-form');
+  const submitBtn = document.getElementById('submit-btn');
+  const btnText   = document.getElementById('btn-text');
+  const btnSpinner= document.getElementById('btn-spinner');
+  const btnIcon   = document.getElementById('btn-icon');
+  const successEl = document.getElementById('success-state');
+  const emailInput= document.getElementById('partner-email');
 
-  // Apps Script endpoint (same one used by the main site)
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyNCYxoGhfJv4YbJJdQE1gqfjsEEzIAwx0aZ32RjR6crtAcdKcix4pYdFSypCgkaDkY/exec";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzefcr66E7_zGsHK8R6z_3fUkCym4OzZeZBiFNuYBeXfKD9-wc9S1G5bsXnoleSQSVx/exec";
+
+  // Corporate email validation (blocks common free providers)
+  const FREE_DOMAINS = ['gmail.com','yahoo.com','hotmail.com','outlook.com','icloud.com','aol.com','protonmail.com','live.com','msn.com'];
+  function isCorporateEmail(email) {
+    const domain = email.split('@')[1]?.toLowerCase();
+    return domain && !FREE_DOMAINS.includes(domain);
+  }
+
+  emailInput.addEventListener('blur', function () {
+    if (emailInput.value && !isCorporateEmail(emailInput.value)) {
+      emailInput.classList.add('invalid');
+      document.getElementById('email-hint').textContent = 'Please use your corporate email address (not Gmail, Yahoo, etc.)';
+      document.getElementById('email-hint').style.color = '#dc2626';
+    } else {
+      emailInput.classList.remove('invalid');
+      document.getElementById('email-hint').textContent = 'Please use your corporate email address (not Gmail, Yahoo, etc.)';
+      document.getElementById('email-hint').style.color = '';
+    }
+  });
 
   function setLoading(on) {
     submitBtn.disabled = on;
@@ -827,9 +586,16 @@ button{font-family:inherit;cursor:pointer;}
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // Native validation
+    // Native HTML5 validation
     if (!form.checkValidity()) {
       form.reportValidity();
+      return;
+    }
+
+    // Corporate email check
+    if (!isCorporateEmail(emailInput.value)) {
+      emailInput.classList.add('invalid');
+      emailInput.focus();
       return;
     }
 
@@ -837,37 +603,31 @@ button{font-family:inherit;cursor:pointer;}
 
     const data = new FormData(form);
     const payload = {
-      formType:   'Partner Lead',
-      sourcePage: 'Partners Page',
-      partnerName:  data.get('partner_name'),
-      partnerFirm:  data.get('partner_firm'),
-      email:        data.get('partner_email'),
-      clientCompany:data.get('client_company'),
-      painPoint:    data.get('pain_point'),
-      message:      data.get('context') || '',
+      formType:      'Partner Lead',
+      sourcePage:    'Partners Page',
+      partnerName:   data.get('partner_name'),
+      partnerFirm:   data.get('partner_firm'),
+      email:         data.get('partner_email'),
+      clientCompany: data.get('client_company'),
+      bottleneck:    data.get('bottleneck'),
+      message:       data.get('context') || '',
     };
 
     try {
-      // Primary: fetch POST
       await fetch(APPS_SCRIPT_URL, {
-        mode: "no-cors", // Tells the browser to send data seamlessly without demanding explicit CORS handshake headers
-        headers: {
-          "Content-Type": "text/plain"
-        },
-        body: JSON.stringify(yourFormDataObject)
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json' },
       }).catch(() => {});
 
-      // Fallback: pixel GET
-      const img = new Image();
-      img.src = APPS_SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
+      // Fallback pixel ping
+      new Image().src = APPS_SCRIPT_URL + '?data=' + encodeURIComponent(JSON.stringify(payload));
 
       await new Promise(r => setTimeout(r, 900));
 
-      // Show success
       form.style.display = 'none';
       successEl.classList.add('visible');
       successEl.focus();
-      console.log('Aquire partner lead submitted:', payload);
 
     } catch (err) {
       setLoading(false);
