@@ -2,3 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true
 }
+{
+  "routes": [
+    {
+      "src": "^/partners/saas$",
+      "dest": "/partners/aquire-partners-saas-v1.html"
+    }
+  ]
+}
